@@ -605,4 +605,409 @@ JOIN    JOB J ON (E.JOB_ID = J.JOB_ID)
 WHERE   SALARY = (SELECT    TRUNC(AVG(SALARY),-5)
                     FROM    EMPLOYEE
                     WHERE   JOB_ID = E.JOB_ID); --메인쿼리의 JOB_ID가 서브쿼리로 들어가는 것.
-                    
+                
+--DAY05
+-- DDL(DATA DEFINITION LANGUAGE)
+/*
+TABLE(물리적인 메모리 공간)
+VIEW(논리적인 메모리 공간)
+SEQUENCE
+INDEX
+
+-- CONSTRAINT( PRIMARY KEY, FOREIGN KEY, NOT NULL, UNIQUE, CHECK)
+--  UNIQUE 와 NOT NULL을 결합하면 PRIMARY KEY가 됨.
+-- 데이터의 무결성, 데이터의 중복을 피할 수 있다.
+
+테이블을 만드는[기본구문]
+CREATE TABLE TABLE_NAME(
+    COLUMN_NAME DATATYPE [DEFAULT EXPR] [COLUMN_CONSTARINT],
+    [TABLE_CONSTRAINT]
+)
+-- INSERT
+INSERT INTO TABLE_NAME(COLUMN) VALUES(?,?,?,?)
+*/
+-- DROP TABLE TABLE_NAME: 테이블 삭제
+CREATE TABLE TEST01(
+    ID  NUMBER(5),
+    NAME    VARCHAR2(50),
+    ADDRESS VARCHAR2(50),
+    REGDATE DATE DEFAULT SYSDATE
+);
+
+INSERT INTO TEST01(ID,NAME,ADDRESS)
+VALUES(100,'이지형','서울');
+
+INSERT INTO TEST01(ID,NAME,ADDRESS)
+VALUES(100,'이지형','서울', NULL);
+
+INSERT INTO TEST01(ID,NAME,ADDRESS)
+VALUES(100,'이지형','서울',DEFAULT);
+
+SELECT  *
+FROM    TEST01;
+
+DROP TABLE TEST01;
+
+--NOT NULL : 컬럼에 대한 제약은 가능하나 테이블에 대한 제약은 불가.
+-- DROP TABLE TEST_NN;
+CREATE TABLE TEST_NN(
+    ID      VARCHAR2(50) UNIQUE,
+    PWD     VARCHAR2(50)
+);
+INSERT INTO TEST_NN VALUES('JSLIM','JSLIM');
+INSERT INTO TEST_NN VALUES(NULL,'JSLIM');
+DROP TABLE TEST_NN;
+
+SELECT  *
+FROM    TEST_NN
+
+-- PRIMARY KEY: 테이블 당 1개만 가능
+-- NOT NULL + UNIQUE
+--DROP TABLE TEST_PK
+CREATE TABLE TEST_PK(
+    ID  VARCHAR2(50),
+    NAME    VARCHAR2(50),
+    PRIMARY KEY(ID, NAME) -- TABLE LEVEL의 제약 여기서 ID와 NAME 두 개를 PK
+);
+INSERT INTO TEST_PK
+VALUES('JSLIM','임섭순');
+INSERT INTO TEST_PK
+VALUES('JSLIM','JSLIM');
+SELECT  *
+FROM    TEST_PK
+
+--FOREIGN KEY(테이블에 대한 외래키 제약) , REFFERENCES(컬럼 레벨에 대한 외래키 제약)
+-- 부모에 의존하는 데이터이거나 NULL을 허용한다.
+-- 테이블은 만드는 순서도 중요! 부모 테이블 먼저 생성
+
+-- DML(DELETE ~~~~)
+-- REFERENCES [ON DELETE SET NULL]:이런 옵션을 주면 부모테이블을 삭제 참조하고 있는 자식 레코드는 NULL로 만듦
+-- REFERENCES [ON DELETE CASCADE]:부모 테이블 및 참조하는 자식 레코드들 삭제, 참조하고 있는 레코드는 전부다 삭제
+
+CREATE TABLE LOC(
+    LOCATION_ID     VARCHAR2(50) PRIMARY KEY,
+    LOC_DESCRIBE    VARCHAR2(50)
+);
+INSERT INTO LOC VALUES(10, '아시아');
+INSERT INTO LOC VALUES(20, '유럽');
+SELECT  *
+FROM    LOC;
+--DROP TABLE DEPT;
+CREATE TABLE DEPT(
+    DEPT_ID NUMBER(5)   PRIMARY KEY,
+    DEPI_NAME   VARCHAR2(50),
+    LOC_ID      VARCHAR2(50) NOT NULL, -- NOT NULL을 넣어주어 LOC_ID는 외래키이면서 NULL을 허용하지 않게 만듦.
+    FOREIGN KEY(LOC_ID) REFERENCES LOC(LOCATION_ID)
+);
+INSERT INTO DEPT VALUES(10, '인사팀',10);
+INSERT INTO DEPT VALUES(20, '교육팀',20);
+INSERT INTO DEPT VALUES(30, '회계팀',20);
+SELECT  *
+FROM    DEPT;
+
+SELECT  DEPT_NAME,
+        LOC_DESC
+FROM    DEPT
+JOIN    LOC ON(
+--DROP TABLE EMP; 부모와 자식간 연결이 되어있으면 DROP은 자식부터 먼저 해야함.
+CREATE TABLE EMP(
+    EMP_ID  VARCHAR2(50) PRIMARY KEY,
+    EMP_NAME    VARCHAR2(50),
+    DEPT_ID     NUMBER(5) REFERENCES DEPT(DEPT_ID)
+);
+INSERT INTO EMP VALUES('100','JSLIM',10);
+INSERT INTO EMP VALUES('200','JSLIM',NULL);
+SELECT  *
+FROM    EMP;
+
+-- COMPOSITE PRIMARY KEY일 경우
+-- DROP TABLE SUPER_PK CASCADE CONSTRAINTS;
+CREATE TABLE SUPER_PK(
+    U_ID    VARCHAR2(20),
+    P_ID    VARCHAR2(20),
+    O_DATE  DATE,
+    AMOUNT  NUMBER, -- NUMBER()는 사이즈를 안 줘도 됨.
+    PRIMARY KEY(U_ID,P_ID)
+);
+INSERT INTO SUPER_PK VALUES('JSLIM','P100',SYSDATE,10000);
+
+CREATE TABLE SUB_FK(
+    SUB_ID  VARCHAR2(20) PRIMARY KEY,
+    U_ID    VARCHAR2(20),
+    P_ID    VARCHAR2(20),
+    FOREIGN KEY(U_ID,P_ID) REFERENCES SUPER_PK(U_ID,P_ID) ON DELETE CASCADE);
+    
+-- SUB_ID,U_ID,P_ID 셋을 (두개는 외래키이자) 기본키로.
+CREATE TABLE SUB_FK(
+    SUB_ID  VARCHAR2(20),
+    U_ID    VARCHAR2(20),
+    P_ID    VARCHAR2(20),
+    FOREIGN KEY(U_ID,P_ID) REFERENCES SUPER_PK(U_ID,P_ID) ON DELETE CASCADE,
+    PRIMARY KEY(SUB_ID,U_ID,P_ID)
+);
+    
+INSERT INTO SUB_FK VALUES('SUB100','JSLIM','P100');
+SELECT  *
+FROM    SUB_FK;
+DROP TABLE SUB_FK;
+
+-- CHECK
+-- 조건을 정의할 때 변하는 값을 조건으로 사용할 수 없다.
+-- DROP TABLE TEST_CK;
+CREATE TABLE TEST_CK(
+    ID  VARCHAR2(50) PRIMARY KEY,
+    SALARY  NUMBER,
+    --HIRE_DATE DATE CHECK(HIRE_DATE < SYSDATE), SYSDATE는 변하는 변수이기 때문에 CHECK 불가.
+    MARRIAGE CHAR(1), -- 혹은컬럼에 CHECK(MARIAGE IN('Y','N'))
+    CHECK(SALARY BETWEEN 0 AND 100), 
+    CHECK(MARRIAGE IN ('Y','N')) 
+);
+INSERT INTO TEST_CK VALUES('100',100, 'Y');
+SELECT  *
+FROM    TEST_CK;
+
+-- DROP
+-- DROP TABLE TABLE_NAME [CASCADE CONSTRAINTS] : 관계가 있는 부모 테이블 먼저 삭제 가능.
+
+
+-- VIEW : 논리적인 구조만 갖고 있고 데이터는 담고 있지 않음. 
+-- 테이블의 부분집합으로 보안 측면이나 복잡한 쿼리를 단순화하기 위해 사용. 읽기 전용으로 생각.
+-- 단일 뷰(INSERT,UPDATE,DELETE)가능 (원본 테이블에 영향 미침) , 복합 뷰(I,U,D) 불가
+-- DROP VIEW VIEW_NAME 
+/*
+[기본구문]
+CREATE [OR REPLACE] VIEW VIEW_NAME(ALIAS)
+AS SUBQUERY;
+*/
+-- 부서번호가 90번인 사원의 이름, 부서번호만 접근할 수 있는 VIEW를 생성한다면?
+CREATE OR REPLACE VIEW V_EMP_90(A,B) -- 여기서도 별칭(ALIAS)을 만들 수 있다 A,B
+AS  SELECT  EMP_NAME,
+            DEPT_ID
+    FROM    EMPLOYEE
+    WHERE   DEPT_ID = '90';
+
+SELECT  *
+FROM    V_EMP_90
+
+-- 인라인 뷰를 활용한 TOP N 분석 가능하다. : 조건에 맞는 상위 몇 개
+-- 조건에 맞는 최상위 또는 최하위 레코드 N개를 식별할 때 사용
+/*
+분석 원리
+- 정렬
+- ROWNUM 이라는 가상의 컬럼을 이용해서 정렬 순서대로 순번 부여
+- 부여된 순번을 이용해서 필요한 수 만큼 식별
+*/
+--부서별 급여 평균
+SELECT  ROWNUM,
+        EMP_NAME
+FROM    EMPLOYEE;
+
+-- 부서별 평균 급여보다 많이 받는 사람들
+SELECT  ROWNUM,
+        EMP_NAME,
+        SALARY
+FROM    (SELECT  
+                DEPT_ID,
+                ROUND(AVG(SALARY),-3) AS DAVG
+        FROM    EMPLOYEE
+        GROUP BY    DEPT_ID) V
+JOIN    EMPLOYEE E ON(E.DEPT_ID = V.DEPT_ID)
+WHERE     SALARY > V.DAVG AND ROWNUM <= 5;
+-- ORDER BY 3 DESC; 이렇게 소팅하면 ROWNUM이 흐트러짐
+
+-- TOP N 분석, 정렬이 되어있는 레코드에 ROWNUM 또는 RANK를 사용하는 것이 TOP N 분석.
+-- ROWNUM은 정렬 되어있는 레코드에 '=' 등호를 쓰면 최상위 한 건만 출력.
+SELECT  ROWNUM, EMP_NAME, SALARY
+FROM (   
+            SELECT  EMP_NAME,
+                    SALARY      
+            FROM    (SELECT  
+                            DEPT_ID,
+                            ROUND(AVG(SALARY),-3) AS DAVG
+                    FROM    EMPLOYEE
+                    GROUP BY    DEPT_ID) V
+            JOIN    EMPLOYEE E ON(E.DEPT_ID = V.DEPT_ID)
+            WHERE     SALARY > V.DAVG
+            ORDER BY 2 DESC)
+WHERE ROWNUM = 1;
+
+-- RANK()를 이용한 TOP N 분석
+SELECT  *
+FROM    (SELECT  EMP_NAME,
+                    SALARY,
+                     RANK() OVER(ORDER BY SALARY DESC) AS RANK
+            FROM    EMPLOYEE)
+WHERE   RANK = 5;
+
+
+-- SEQUENCE
+-- 순차적으로 정수 값을 자동으로 생성하는 객체
+/* CREATE SEQUENCE SEQUENCE_NAME;
+START WITH 10
+INCREMENT BY 10
+MAXVALUE 100
+
+*/
+-- NEXTVAL, CURRVAL
+CREATE SEQUENCE TEST_SEQ;
+SELECT TEST_SEQ.NEXTVAL FROM DUAL; -- 다음 값을 리턴.
+SELECT TEST_SEQ.CURRVAL FROM DUAL; -- 마지막 값을 리턴.
+DROP SEQUENCE TEST_SEQ;
+
+
+
+CREATE TABLE CUSTOMERS(
+    CNO     NUMBER(5) PRIMARY KEY,
+    CNAME   VARCHAR2(10) NOT NULL,
+    ADDRESS VARCHAR2(50) NOT NULL,
+    EAIL    VARCHAR2(20) NOT NULL,
+    PHONE   VARCHAR2(20) NOT NULL
+);
+SELECT  *
+FROM    CUSTOMERS
+
+CREATE TABLE ORDERS(
+    ORDERNO     NUMBER(10) PRIMARY KEY,
+    ORDERDATE   DATE DEFAULT SYSDATE       NOT NULL,
+    ADDRESS     VARCHAR2(50) NOT NULL,
+    PHONE       VARCHAR2(20) NOT NULL,
+    STATUS      VARCHAR2(20) NOT NULL,
+    CNO NUMBER(5)   NOT NULL,
+    FOREIGN KEY(CNO) REFERENCES CUSTOMERS(CNO)
+);
+
+CREATE TABLE PRODUCTS(
+    PNO     NUMBER(5)   PRIMARY KEY,
+    PNAME   VARCHAR2(20) NOT NULL,
+    COST    NUMBER(8)   DEFAULT 0   NOT NULL,
+    STOCK   NUMBER(5)   DEFAULT 0   NOT NULL
+)
+
+CREATE TABLE ORDERDETAIL(
+    ORDERNO NUMBER(10),
+    PNO     NUMBER(5) ,
+    QTY     NUMBER(5),
+    COST    NUMBER(8),
+    FOREIGN KEY(ORDERNO) REFERENCES ORDERS(ORDERNO),
+    FOREIGN KEY(PNO) REFERENCES PRODUCTS(PNO),
+    PRIMARY KEY(ORDERNO,PNO)
+);
+/*
+ALTER TABLE TABLE명 ADD 컬럼명 데이터타입 : 컬럼 추가
+ALTER TABLE TABLE명 DROP COLUMN 컬럼명 : 컬럼 삭제
+ALTER TABLE ORTL RENAME TO ORDERDETAIL : 테이블 명 바꾸기
+*/
+
+--DAY05
+-- DML(SELECT, INSERT, UPDATE, DELETE)
+-- TRANSACTION( COMMIT, ROLLBACK)
+/*
+무결성 제약
+            부모      자식
+UPDATE       X         O
+INSERT       O         O
+DELETE       X         O
+*/
+-- 데이터 갱신 구문
+/*
+UPDATE  TABLE_NAME
+SET     COLUMN_NMAE = VALUE | SUBQUERY, [COLUMN_NAME = VALUE] -- SET 절 까지만 쓰면 특정 컬럼에 전체 행에 대한 변경
+[WHERE   CONDITION] -- 이건 옵션이지만 WHERE절을 넣으면 특정 컬럼에 대한 값 변경
+*/
+SELECT  *
+FROM    EMPLOYEE;
+
+UPDATE  EMPLOYEE
+SET     JOB_ID = (SELECT    JOB_ID
+                    FROM    EMPLOYEE
+                    WHERE   EMP_NAME = '성해교'),
+        DEPT_ID = '90'
+WHERE   EMP_NAME = '심하균'
+
+UPDATE  EMPLOYEE
+SET     MARRIAGE = DEFAULT
+WHERE   EMP_ID = '100';
+
+-- INSERT
+/*
+INSERT INTO TABLE_NAME(COLUMN_NAME)
+VALUES (VALUE1,VALUE2)
+INSERT INTO TABLE_NAME(COLUMN_NAME)
+SUBQUERY
+- 데이터 타입 일치
+- 순서 일치
+- 개수 일치
+*/
+INSERT INTO EMPLOYEE(EMP_ID,EMP_NAME,EMP_NO)
+VALUES('900', '임정섭', '123456-1234567');
+
+-- DELETE: 테이블에 포함된 기존 데이터를 삭제, 즉 레코드 삭제, ROLLBACK 가능
+/*
+DELETE FROM TABLE_NAME : 여기까지만 하면 테이블 구조는 남기고 전체 데이터를 삭제
+[WHERE CONDITION];
+
+TRUNCATE TABLE TABLE_NAME : ROLLBACK불가능 무조건 COMMIT됨 따라서 데이터 복구가 안됨.
+*/
+SELECT  *
+FROM    DEPARTMENT;
+
+-- ERROR 무결성 제약 위배, EMPLOYEE테이블이 DEPARTMENT의 LOC_ID를 외래키로 참조.
+DELETE 
+FROM  DEPARTMENT
+WHERE LOC_ID LIKE 'A%';
+
+DELETE
+FROM    JOB
+WHERE   JOB_ID = 'J2';
+
+DELETE
+FROM    EMPLOYEE
+WHERE   EMP_ID = '141'; --EMPLOYEE는 재귀(MGR_ID가 EMP_ID 참조 중)
+
+-- TRANSACTION
+-- 데이터의 일관성을 유지하기위해서 사용하는 논리적으로 연관된 작업들의 집합
+-- 하나이상의 연관된 DML 작업
+>INSERT~~
+>UPDATE~~
+>COMMIT/ROLLBACK :테이블에 직접 반영 / 원상 복귀
+
+>UPDATE
+>DELETE
+>CREATE - AUTO COMMIT 발생(DDL 명령어를 입력하면), 테이블에 적용 됨.
+
+-- 동시성 제어
+
+
+--ALTER
+/*
+-테이블 수정, 새컬럼 추가, 기존 컬럼 삭제, 기존 컬럼의 데이터형이나 속성 변경가능
+-테이블 수정 = 테이블의 컬럼 수정
+-각종 제약 조건 추가 시에도 활용 가능
+*/
+--CASE 1. 컬럼 속성 변경
+ALTER TABLE TABLE_NAME
+MODIFY 컬럼명 데이터타입; --예)MODIFY EMP_NAME VARCHAR2(20)
+--CASE 2. 컬럼에 제약 조건 추가
+ALTER TABLE TABLE_NAME
+ADD CONSTRAINTS 제약조건명 PRIMARY KEY(컬럼명);
+--2개 이상의 컬럼을 기본 키로 설정(컬럼명1,컬럼명2)
+ALTER TABLE TABLE_NAME
+DROP CONSTRAINTS 제약조건명 -- 제약 조건을 삭제
+--CASE 3. 새로운 컬럼 추가
+ALTER TABLE TABLE_NAME
+ADD 컬럼명 데이터타입; NOT NULL 명시 가능
+--CASE 4. 컬럼 삭제
+ALTER TABLE TABLE_NAME
+DROP COLUMN 컬럼명
+
+ALTER TABLE item_content
+    ADD COLUMN badge INTEGER,
+    ADD COLUMN age INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN duration INTEGER AFTER description;
+--컬럼 이름 바꾸기
+ALTER TABLE contacts
+    CHANGE COLUMN old_name new_name
+    varchar(20) NOT NULL;
+-- 테이블 이름 바꾸기
+ALTER TABLE contacts
+  RENAME TO people;
