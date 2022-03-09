@@ -1,36 +1,36 @@
---ÇÐ½À¸ñÇ¥(ÇÔ¼ö)
+--í•™ìŠµëª©í‘œ(í•¨ìˆ˜)
 /*
-À¯Çü
--´ÜÀÏ Çà ÇÔ¼ö(Single row function)
--±×·ì ÇÔ¼ö(Group function)
+ìœ í˜•
+-ë‹¨ì¼ í–‰ í•¨ìˆ˜(Single row function)
+-ê·¸ë£¹ í•¨ìˆ˜(Group function)
 
-ÄÃ·³Å¸ÀÔ(¼ýÀÚ - number, ¹®ÀÚ- char, varchar2,  ³¯Â¥ - date)
-- ¼ýÀÚ ÇÔ¼ö
-- ¹®ÀÚ ÇÔ¼ö
-- ³¯Â¥ ÇÔ¼ö
-- ±âÅ¸ ÇÔ¼ö
+ì»¬ëŸ¼íƒ€ìž…(ìˆ«ìž - number, ë¬¸ìž- char, varchar2,  ë‚ ì§œ - date)
+- ìˆ«ìž í•¨ìˆ˜
+- ë¬¸ìž í•¨ìˆ˜
+- ë‚ ì§œ í•¨ìˆ˜
+- ê¸°íƒ€ í•¨ìˆ˜
 */
 
--- ¹®ÀÚÇÔ¼ö
+-- ë¬¸ìží•¨ìˆ˜
 -- LENGTH
 SELECT  *
 FROM    COLUMN_LENGTH;
--- CHAR ÇÑ±ÛÀÏ °æ¿ì LENGTH
--- ÇÑ±Û 3BYTE, 6(±ÛÀÚ)*3(BYTE) = 18, 20(ÃÖ´ë BYTE)- 18 =2 , 2+6(±ÛÀÚ)=8 BYTE
--- µû¶ó¼­ CHARACTER TYPE¿¡ ÇÑ±ÛÀº ÁÁÁö ¾Ê´Ù.
+-- CHAR í•œê¸€ì¼ ê²½ìš° LENGTH
+-- í•œê¸€ 3BYTE, 6(ê¸€ìž)*3(BYTE) = 18, 20(ìµœëŒ€ BYTE)- 18 =2 , 2+6(ê¸€ìž)=8 BYTE
+-- ë”°ë¼ì„œ CHARACTER TYPEì— í•œê¸€ì€ ì¢‹ì§€ ì•Šë‹¤.
 SELECT  LENGTH(CHARTYPE),
         LENGTH(VARCHARTYPE)
 FROM    COLUMN_LENGTH;
 
--- INSTR(): Ã£´Â ¹®ÀÚÀÇ ÀÎµ¦½º¸¦ ¸®ÅÏÇÏ´Â ÇÔ¼ö
--- INSTR(STRING, SUBSTRING, [POSITION, OCCURRANCE]): NUMBER , [ ]¿¡ ÀÖ´Â °ÍÀº ¿É¼Å³¯ ÀÎÀÚ.
---                        ¹®ÀÚ¿­ÀÇ ¼­Äª ¹æÇâ, ¹Ýº¹ È½¼ö(Áï, °¡Àå Ã³À½ Ã£À¸·Á°í ÇÏ´Â ¹®ÀÚ¿­À» ¸¸³ª´Â È½¼ö ÁöÁ¤)
+-- INSTR(): ì°¾ëŠ” ë¬¸ìžì˜ ì¸ë±ìŠ¤ë¥¼ ë¦¬í„´í•˜ëŠ” í•¨ìˆ˜
+-- INSTR(STRING, SUBSTRING, [POSITION, OCCURRANCE]): NUMBER , [ ]ì— ìžˆëŠ” ê²ƒì€ ì˜µì…”ë‚  ì¸ìž.
+--                        ë¬¸ìžì—´ì˜ ì„œì¹­ ë°©í–¥, ë°˜ë³µ íšŸìˆ˜(ì¦‰, ê°€ìž¥ ì²˜ìŒ ì°¾ìœ¼ë ¤ê³  í•˜ëŠ” ë¬¸ìžì—´ì„ ë§Œë‚˜ëŠ” íšŸìˆ˜ ì§€ì •)
 SELECT  *
 FROM    EMPLOYEE;
 
--- '@VCC.COM' ¹®ÀÚ¿­ Áß .¾ÕÀÇ ¹®ÀÚ 'C'ÀÇ ÀÎµ¦½º¸¦ ±¸ÇÏ°íÀÚ ÇÑ´Ù¸é? ¿À¶óÅ¬Àº ÀÎµ¦½º°¡ 1ºÎÅÍ ½ÃÀÛÇÔ.ÆÄÀÌ½ã°ú ´Ù¸§
+-- '@VCC.COM' ë¬¸ìžì—´ ì¤‘ .ì•žì˜ ë¬¸ìž 'C'ì˜ ì¸ë±ìŠ¤ë¥¼ êµ¬í•˜ê³ ìž í•œë‹¤ë©´? ì˜¤ë¼í´ì€ ì¸ë±ìŠ¤ê°€ 1ë¶€í„° ì‹œìž‘í•¨.íŒŒì´ì¬ê³¼ ë‹¤ë¦„
 SELECT  EMAIL,
-        INSTR(EMAIL, 'c', -1, 2) -- 3¹ø Â° ÀÎÀÚ´Â ÀÎµ¦½º¸¦ -1·Î °Å²Ù·Î ¼¾´Ù´Â ¶æ, OCCURRANCE: 2´Â µÎ ¹ø ¹Ýº¹(Áï,com¿¡¼­ c¸¦ Ã£°í ±× ´ÙÀ½ . µÚ¿¡ ÀÖ´Â cÃ£À¸´Ï±î µÎ ¹ø.)
+        INSTR(EMAIL, 'c', -1, 2) -- 3ë²ˆ ì§¸ ì¸ìžëŠ” ì¸ë±ìŠ¤ë¥¼ -1ë¡œ ê±°ê¾¸ë¡œ ì„¼ë‹¤ëŠ” ëœ», OCCURRANCE: 2ëŠ” ë‘ ë²ˆ ë°˜ë³µ(ì¦‰,comì—ì„œ cë¥¼ ì°¾ê³  ê·¸ ë‹¤ìŒ . ë’¤ì— ìžˆëŠ” cì°¾ìœ¼ë‹ˆê¹Œ ë‘ ë²ˆ.)
 FROM    EMPLOYEE;
 
 -- LPAD | RPAD
@@ -42,52 +42,52 @@ SELECT  EMAIL,
 FROM    EMPLOYEE;
 
 -- TRIM, LTRIN, RTRIM
--- ¹®ÀÚ¸¦ Á¦°ÅÇÒ ¶§
--- LTRIM(STRING, [STR]): 1¹ø ÀÎÀÚ¿¡¼­ 2 ¹ø ÀÎÀÚÀÇ ¹®ÀÚ¸¦ Á¦°Å
--- RTRIM(STRING, [STR]) : µÎ ¹øÂ° ÀÎÀÚ¸¦ ÁöÁ¤ÇÏÁö ¾ÊÀ¸¸é TRIM ÇÔ¼ö´Â ±âº»ÀûÀ¸·Î °ø¹éÀ» Á¦°Å
--- TRIM(LEADING | TRAILING | BOTH STR FROM STRING), TRIM ÇÏ³ª·Î L,RTRIMÀ» Ç¥Çö ÇÒ ¼ö ÀÖ´Ù.
---       ¿ÞÂÊ         ¿À¸¥ÂÊ     ¾çÂÊ
+-- ë¬¸ìžë¥¼ ì œê±°í•  ë•Œ
+-- LTRIM(STRING, [STR]): 1ë²ˆ ì¸ìžì—ì„œ 2 ë²ˆ ì¸ìžì˜ ë¬¸ìžë¥¼ ì œê±°
+-- RTRIM(STRING, [STR]) : ë‘ ë²ˆì§¸ ì¸ìžë¥¼ ì§€ì •í•˜ì§€ ì•Šìœ¼ë©´ TRIM í•¨ìˆ˜ëŠ” ê¸°ë³¸ì ìœ¼ë¡œ ê³µë°±ì„ ì œê±°
+-- TRIM(LEADING | TRAILING | BOTH STR FROM STRING), TRIM í•˜ë‚˜ë¡œ L,RTRIMì„ í‘œí˜„ í•  ìˆ˜ ìžˆë‹¤.
+--       ì™¼ìª½         ì˜¤ë¥¸ìª½     ì–‘ìª½
 SELECT  LENGTH('    TECH    '),
         LTRIM('    TECH    '),
-        LENGTH(LTRIM('    TECH    ')),-- ÇÔ¼ö°¡ ÇÔ¼ö¸¦ ¹ÞÀ» ¼ö ÀÖÀ½
+        LENGTH(LTRIM('    TECH    ')),-- í•¨ìˆ˜ê°€ í•¨ìˆ˜ë¥¼ ë°›ì„ ìˆ˜ ìžˆìŒ
         RTRIM('    TECH    '),
         LENGTH(RTRIM('    TECH    '))
-FROM    DUAL;  -- DUAL Àº ´õ¹Ì Å×ÀÌºí
+FROM    DUAL;  -- DUAL ì€ ë”ë¯¸ í…Œì´ë¸”
 
 SELECT  TRIM(LEADING 'A' FROM 'AATECHAA'),
         TRIM(TRAILING 'A' FROM 'AATECHAA'),
         TRIM(BOTH 'A' FROM 'AATECHAA')
 FROM    DUAL;
 
--- Áß¿ä
--- SUBSTR(STRING, POSITION, [LENGTH]): [LENGTH]¸¸Å­ POSITION ¼ø¼­´ë·Î ¹®ÀÚ¸¦ °¡Á®¿È,
---               POSITIONÀ» 8·Î ÇÏ¸é ÁÂ¿¡¼­ ¿ì ¹æÇâ ±âÁØ 8¹ø ÀÎµ¦½ººÎÅÍ ½ÃÀÛ.
+-- ì¤‘ìš”
+-- SUBSTR(STRING, POSITION, [LENGTH]): [LENGTH]ë§Œí¼ POSITION ìˆœì„œëŒ€ë¡œ ë¬¸ìžë¥¼ ê°€ì ¸ì˜´,
+--               POSITIONì„ 8ë¡œ í•˜ë©´ ì¢Œì—ì„œ ìš° ë°©í–¥ ê¸°ì¤€ 8ë²ˆ ì¸ë±ìŠ¤ë¶€í„° ì‹œìž‘.
 SELECT  EMP_NO,
         SUBSTR(EMP_NO, 1, 6),
         SUBSTR(EMP_NO, 8, 1)
 FROM    EMPLOYEE;
 
--- »ç¿øÅ×ÀÌºí¿¡¼­ ¼ºº°ÀÌ ³²ÀÚÀÎ »ç¿øÀÇ ¸ðµç Á¤º¸¸¦ Á¶È¸ÇÑ´Ù¸é?
+-- ì‚¬ì›í…Œì´ë¸”ì—ì„œ ì„±ë³„ì´ ë‚¨ìžì¸ ì‚¬ì›ì˜ ëª¨ë“  ì •ë³´ë¥¼ ì¡°íšŒí•œë‹¤ë©´?
 SELECT  *
 FROM    EMPLOYEE
 WHERE   SUBSTR(EMP_NO, 8, 1) = '1';
 
--- ¼ýÀÚÇÔ¼ö
+-- ìˆ«ìží•¨ìˆ˜
 -- ROUND(NUMBER,[DECIMAL_PLACE]), TRUNC(NUMBER,[DECIMAL_PLACE])
 SELECT  ROUND(123.315,2),
         ROUND(123.315),
-        ROUND(123.315,-1), -- DECIMAL_PLACE°¡ À½¼öÀÌ¸é Á¤¼ö ºÎºÐ
-        TRUNC(125.315,-1) -- ÇØ´ç ÀÚ¸®¼ö¿¡¼­ Àý»è
+        ROUND(123.315,-1), -- DECIMAL_PLACEê°€ ìŒìˆ˜ì´ë©´ ì •ìˆ˜ ë¶€ë¶„
+        TRUNC(125.315,-1) -- í•´ë‹¹ ìžë¦¬ìˆ˜ì—ì„œ ì ˆì‚­
 FROM    DUAL;
 
 
--- ³¯Â¥ ÇÔ¼ö
--- SYSDATE: ÇöÀç ³¯Â¥ Ãâ·Â, ADD_MONTHS(DATE,N): DATE¿¡ N ¸¸Å­ÀÇ °³¿ù¼ö¸¦ Ãß°¡ÇÔ 
--- MONTHS_BETWEEN(±âÁØ ³¯Â¥, ÀÛÀº ³¯Â¥) : ±âÁØ³¯Â¥¿Í ÀÛÀº ³¯Â¥ »çÀÌÀÇ Â÷ÀÌ °³¿ù ¼ö°¡ ¸®ÅÏµÊ.
+-- ë‚ ì§œ í•¨ìˆ˜
+-- SYSDATE: í˜„ìž¬ ë‚ ì§œ ì¶œë ¥, ADD_MONTHS(DATE,N): DATEì— N ë§Œí¼ì˜ ê°œì›”ìˆ˜ë¥¼ ì¶”ê°€í•¨ 
+-- MONTHS_BETWEEN(ê¸°ì¤€ ë‚ ì§œ, ìž‘ì€ ë‚ ì§œ) : ê¸°ì¤€ë‚ ì§œì™€ ìž‘ì€ ë‚ ì§œ ì‚¬ì´ì˜ ì°¨ì´ ê°œì›” ìˆ˜ê°€ ë¦¬í„´ë¨.
 SELECT  SYSDATE + 1
 FROM    DUAL;
 
--- ±Ù¼Ó³â¼ö°¡ 20³â ÀÌ»óÀÎ »ç¿øÀÇ ¸ðµç Á¤º¸¸¦ Á¶È¸ÇÑ´Ù¸é?
+-- ê·¼ì†ë…„ìˆ˜ê°€ 20ë…„ ì´ìƒì¸ ì‚¬ì›ì˜ ëª¨ë“  ì •ë³´ë¥¼ ì¡°íšŒí•œë‹¤ë©´?
 SELECT  HIRE_DATE,
         ADD_MONTHS(HIRE_DATE, 240)
 FROM    EMPLOYEE;
@@ -96,37 +96,37 @@ SELECT  *
 FROM    EMPLOYEE
 WHERE   MONTHS_BETWEEN(SYSDATE, HIRE_DATE) >= 240;
 
--- ±Ù¼Ó³â¼ö Ãâ·Â
+-- ê·¼ì†ë…„ìˆ˜ ì¶œë ¥
 SELECT  EMP_NAME,
         HIRE_DATE,
-        TRUNC(MONTHS_BETWEEN(SYSDATE, HIRE_DATE) / 12) AS ±Ù¼Ó³â¼ö
+        TRUNC(MONTHS_BETWEEN(SYSDATE, HIRE_DATE) / 12) AS ê·¼ì†ë…„ìˆ˜
 FROM    EMPLOYEE
 WHERE   MONTHS_BETWEEN(SYSDATE, HIRE_DATE) >= 240;
 
--- Å¸ÀÔ º¯È¯ ÇÔ¼ö
+-- íƒ€ìž… ë³€í™˜ í•¨ìˆ˜
 /*
-<-  TO_NUMBER()  TO_CHAR(DATE,Ç¥ÇöÇü½Ä)
+<-  TO_NUMBER()  TO_CHAR(DATE,í‘œí˜„í˜•ì‹)
 NUMBER - CHARCACTER - DATE
 ->  TO_CHAR()    TO_DATE()
 
-³¯Â¥ -> ¹®ÀÚ
-Ç¥Çö Çü½Ä
-- YYYY/YY/YEAR: ³×ÀÚ¸® ³âµµ/ µÎÀÚ¸® ³âµµ/ ¹®ÀÚÇü½Ä
+ë‚ ì§œ -> ë¬¸ìž
+í‘œí˜„ í˜•ì‹
+- YYYY/YY/YEAR: ë„¤ìžë¦¬ ë…„ë„/ ë‘ìžë¦¬ ë…„ë„/ ë¬¸ìží˜•ì‹
 - MONTH/MON/MM/RM
-- HH/MI/SS : ½ÃºÐÃÊ
+- HH/MI/SS : ì‹œë¶„ì´ˆ
 */
 
 SELECT  *
 FROM    EMPLOYEE
-WHERE   DEPT_ID = 90; -- ¿©±â¼­ ¹¬½ÃÀûÀ¸·Î TO_CHAR(90), DEPT_ID´Â CHAR TYPE 90Àº ¼ýÀÚ. µû¶ó¼­ ¹¬½ÃÀû Çüº¯È¯.
+WHERE   DEPT_ID = 90; -- ì—¬ê¸°ì„œ ë¬µì‹œì ìœ¼ë¡œ TO_CHAR(90), DEPT_IDëŠ” CHAR TYPE 90ì€ ìˆ«ìž. ë”°ë¼ì„œ ë¬µì‹œì  í˜•ë³€í™˜.
 
--- ³¯Â¥·Î Ç¥ÇöÇÏÁö ¸øÇÏ´Â °ÍÀ» ¹®ÀÚ Çü½ÄÀ¸·Î Çüº¯È¯ ÈÄ ¿øÇÏ´Â Çü½ÄÀ¸·Î Ç¥Çö °¡´É
-SELECT  TO_CHAR(SYSDATE,'YYYY-MM-DY'), --DY ´Â ¿äÀÏ, DD´Â ÀÏÀÚ.
+-- ë‚ ì§œë¡œ í‘œí˜„í•˜ì§€ ëª»í•˜ëŠ” ê²ƒì„ ë¬¸ìž í˜•ì‹ìœ¼ë¡œ í˜•ë³€í™˜ í›„ ì›í•˜ëŠ” í˜•ì‹ìœ¼ë¡œ í‘œí˜„ ê°€ëŠ¥
+SELECT  TO_CHAR(SYSDATE,'YYYY-MM-DY'), --DY ëŠ” ìš”ì¼, DDëŠ” ì¼ìž.
         TO_CHAR(SYSDATE,'YYYY-MM-DD DAY'),
-        TO_CHAR(SYSDATE,'MM-DD,YYYY'), -- ¿øÇÏ´Â Çü½ÄÀ¸·Î ÁöÁ¤ °¡´É
+        TO_CHAR(SYSDATE,'MM-DD,YYYY'), -- ì›í•˜ëŠ” í˜•ì‹ìœ¼ë¡œ ì§€ì • ê°€ëŠ¥
         TO_CHAR(SYSDATE,'YYYY'),
         TO_CHAR(SYSDATE,'AM HH24:MI:SS'),
-        TO_CHAR(SYSDATE,'YEAR, Q') -- Q´Â ÄõÅÍ
+        TO_CHAR(SYSDATE,'YEAR, Q') -- QëŠ” ì¿¼í„°
 FROM    DUAL;
 
 SELECT  HIRE_DATE,
@@ -135,28 +135,28 @@ FROM    EMPLOYEE
 WHERE   DEPT_ID = '90';
 
 
--- CHAR -> DATE, ¹®ÀÚÇü½ÄÀÌ ³¯Â¥ Çü½ÄÀ¸·Î µé¾î¿Ã ¶§´Â TO_DATEÀÇ Æ÷¸ä Çü½ÄÀÌ ¹®ÀÚÇü½Ä ±×´ë·Î ÇØ¾ßÇÔ.
+-- CHAR -> DATE, ë¬¸ìží˜•ì‹ì´ ë‚ ì§œ í˜•ì‹ìœ¼ë¡œ ë“¤ì–´ì˜¬ ë•ŒëŠ” TO_DATEì˜ í¬ë©§ í˜•ì‹ì´ ë¬¸ìží˜•ì‹ ê·¸ëŒ€ë¡œ í•´ì•¼í•¨.
 --
 SELECT  TO_DATE('20200215','YYYYMMDD'),
         TO_DATE('220215','YYMMDD'),
         TO_CHAR(TO_DATE('220215','YYMMDD'),'YYYY-MM-DD')
 FROM    DUAL;
 
--- ³âµµ¸¦ Æ÷¸ËÆÃÇÒ ¶§ YYYY(ÇöÀç ¼¼±â¸¦ ¹ÝÈ¯), RRRR(ÀÌÀü,ÇöÀç,´ÙÀ½ ¼¼±â¸¦ ¹ÝÈ¯)
+-- ë…„ë„ë¥¼ í¬ë§·íŒ…í•  ë•Œ YYYY(í˜„ìž¬ ì„¸ê¸°ë¥¼ ë°˜í™˜), RRRR(ì´ì „,í˜„ìž¬,ë‹¤ìŒ ì„¸ê¸°ë¥¼ ë°˜í™˜)
 SELECT  HIRE_DATE,
         TO_CHAR(HIRE_DATE, 'YYYY-MM--DD')
 FROM    EMPLOYEE
-WHERE   EMP_NAME = 'ÇÑ¼±±â';
+WHERE   EMP_NAME = 'í•œì„ ê¸°';
 
--- Çö¾÷¿¡¼­ ³¯Â¥¸¦ °ü¸®ÇÒ¶§ ¹®ÀÚ¿­ 8ÀÚ¸®·Î °ü¸®ÇÔ
-SELECT  SYSDATE AS ÇöÀç,
-        '95/02/15' AS ÀÔ·Â,
+-- í˜„ì—…ì—ì„œ ë‚ ì§œë¥¼ ê´€ë¦¬í• ë•Œ ë¬¸ìžì—´ 8ìžë¦¬ë¡œ ê´€ë¦¬í•¨
+SELECT  SYSDATE AS í˜„ìž¬,
+        '95/02/15' AS ìž…ë ¥,
         TO_CHAR(TO_DATE('95/02/15','YY/MM/DD'),'YYYY'),
         TO_CHAR(TO_DATE('95/02/15','RR/MM/DD'),'YYYY')
 FROM    DUAL;
 
--- ±âÅ¸ÇÔ¼ö
--- NULL °ª Ã³¸® ÇÔ¼ö: NVL(ÀÎÀÚ, °ª) -> NVLÀº ÀÎÀÚÀÇ NULL°ªÀ» ÁöÁ¤ °ªÀ¸·Î ´ëÃ¼µÊ.
+-- ê¸°íƒ€í•¨ìˆ˜
+-- NULL ê°’ ì²˜ë¦¬ í•¨ìˆ˜: NVL(ì¸ìž, ê°’) -> NVLì€ ì¸ìžì˜ NULLê°’ì„ ì§€ì • ê°’ìœ¼ë¡œ ëŒ€ì²´ë¨.
 SELECT  EMP_NAME,
         BONUS_PCT,
         NVL(BONUS_PCT, 0)
@@ -166,65 +166,65 @@ WHERE   SALARY > 3500000;
 SELECT  EMP_NAME,
         SALARY,
         SALARY * 12 AS ANNUL_SALARY,
-        (SALARY +(SALARY * NVL(BONUS_PCT, 0))) * 12 AS "12°³¿ù¿¬ºÀ"
+        (SALARY +(SALARY * NVL(BONUS_PCT, 0))) * 12 AS "12ê°œì›”ì—°ë´‰"
 FROM    EMPLOYEE ;
 
--- ¿À¶óÅ¬ Àü¿ë ÇÔ¼ö
+-- ì˜¤ë¼í´ ì „ìš© í•¨ìˆ˜
 -- DECODE(EXPR, SEARCH, RESULT, [SEARCH, RESULT],[DEFALUT])
--- IF~ELSE ¶û °°À½ 
--- ºÎ¼­¹øÈ£°¡ 50¹øÀÎ »ç¿øµéÀÇ ÀÌ¸§, ¼ºº°À» Á¶È¸ÇÑ´Ù¸é?
+-- IF~ELSE ëž‘ ê°™ìŒ 
+-- ë¶€ì„œë²ˆí˜¸ê°€ 50ë²ˆì¸ ì‚¬ì›ë“¤ì˜ ì´ë¦„, ì„±ë³„ì„ ì¡°íšŒí•œë‹¤ë©´?
 SELECT  EMP_NAME,
         DECODE(SUBSTR(EMP_NO,8,1),
-                '1', '³²ÀÚ',
-                '3', '³²ÀÚ',
-                '¿©ÀÚ') AS GENDER
+                '1', 'ë‚¨ìž',
+                '3', 'ë‚¨ìž',
+                'ì—¬ìž') AS GENDER
 FROM    EMPLOYEE
 WHERE   DEPT_ID = '50';
 
--- ºÎ¼­º° ÀÎ»ó±Þ¿©¸¦ È®ÀÎÇÏ°íÀÚ ÇÑ´Ù
--- 90¹ø ºÎ¼­¸¸ ±Þ¿©ÀÇ 10% ÀÎ»óÇÑ´Ù¸é?
+-- ë¶€ì„œë³„ ì¸ìƒê¸‰ì—¬ë¥¼ í™•ì¸í•˜ê³ ìž í•œë‹¤
+-- 90ë²ˆ ë¶€ì„œë§Œ ê¸‰ì—¬ì˜ 10% ì¸ìƒí•œë‹¤ë©´?
 SELECT  SALARY,
         DEPT_ID,
         DECODE(DEPT_ID,
                 '90', SALARY * 1.1,
-                SALARY) AS ÀÎ»ó±Þ¿©
+                SALARY) AS ì¸ìƒê¸‰ì—¬
 FROM    EMPLOYEE;
 
---ANSI Ç¥ÁØ (°øÅë Ç¥ÁØ) CASE~~END<- *DECODE´Â ¿À¶óÅ¬ Àü¿ë*
+--ANSI í‘œì¤€ (ê³µí†µ í‘œì¤€) CASE~~END<- *DECODEëŠ” ì˜¤ë¼í´ ì „ìš©*
 -- CASE EXPR WHEN SEARCH THEN RESULT[ WHEN SEARCH THEN RESULT ] ELSE DEFAULT END
 -- CASE WHEN CONDITION THEN RESULT[ WHEN SEARCH THEN RESULT ] ELSE DEFAULT END
 SELECT  SALARY,
         DEPT_ID,
         CASE DEPT_ID WHEN '90' THEN SALARY * 1.1
                      ELSE SALARY
-        END AS ÀÎ»ó±Þ¿©
+        END AS ì¸ìƒê¸‰ì—¬
 FROM    EMPLOYEE;
 
 SELECT  SALARY,
         DEPT_ID,
         CASE WHEN DEPT_ID='90' THEN SALARY * 1.1
                      ELSE SALARY
-        END AS ÀÎ»ó±Þ¿©
+        END AS ì¸ìƒê¸‰ì—¬
 FROM    EMPLOYEE;
 
--- ±Þ¿©¿¡ µû¸¥ ±Þ¿© µî±ÞÀ» È®ÀÎÇÒ·Á°í ÇÑ´Ù.
--- 3000000 ÀÌÇÏ¸é ÃÊ±Þ, 4000000 ÀÌÇÏ¸é Áß±Þ, ÃÊ°ú¸é °í±ÞÀ¸·Î ±¸ºÐÇÏ°í ½Í´Ù¸é?
+-- ê¸‰ì—¬ì— ë”°ë¥¸ ê¸‰ì—¬ ë“±ê¸‰ì„ í™•ì¸í• ë ¤ê³  í•œë‹¤.
+-- 3000000 ì´í•˜ë©´ ì´ˆê¸‰, 4000000 ì´í•˜ë©´ ì¤‘ê¸‰, ì´ˆê³¼ë©´ ê³ ê¸‰ìœ¼ë¡œ êµ¬ë¶„í•˜ê³  ì‹¶ë‹¤ë©´?
 SELECT  EMP_NAME,
         SALARY,
-        CASE WHEN SALARY<= 3000000 THEN 'ÃÊ±Þ'
-             WHEN SALARY<= 4000000 THEN 'Áß±Þ'
-             ELSE '°í±Þ'
-        END AS ±Þ¿©µî±Þ
+        CASE WHEN SALARY<= 3000000 THEN 'ì´ˆê¸‰'
+             WHEN SALARY<= 4000000 THEN 'ì¤‘ê¸‰'
+             ELSE 'ê³ ê¸‰'
+        END AS ê¸‰ì—¬ë“±ê¸‰
 FROM    EMPLOYEE
 
--- ±×·ìÇÔ¼ö(SUM, AVG) - INPUTÀ¸·Î NUMBER
--- MIN, MAX, COUNT´Â ·¹ÄÚµåÀÇ °Ç¼ö¸¦ Ãâ·Â) - ANY(NUMBER, CHARACTER, DATE)
+-- ê·¸ë£¹í•¨ìˆ˜(SUM, AVG) - INPUTìœ¼ë¡œ NUMBER
+-- MIN, MAX, COUNTëŠ” ë ˆì½”ë“œì˜ ê±´ìˆ˜ë¥¼ ì¶œë ¥) - ANY(NUMBER, CHARACTER, DATE)
 -- INPUT N -> OUTPUT 1
-SELECT  SUM(SALARY), -- SELECTÀý¿¡ SUM°°Àº ±×·ìÇÔ¼ö°¡ »ç¿ëµÇ¸é ÀÏ¹Ý ¼Ó¼ºÀº ¾µ¼ö ¾øÀ½.
-        AVG(SALARY), -- AVG´Â NULLÀ» Á¦¿ÜÇÔ
+SELECT  SUM(SALARY), -- SELECTì ˆì— SUMê°™ì€ ê·¸ë£¹í•¨ìˆ˜ê°€ ì‚¬ìš©ë˜ë©´ ì¼ë°˜ ì†ì„±ì€ ì“¸ìˆ˜ ì—†ìŒ.
+        AVG(SALARY), -- AVGëŠ” NULLì„ ì œì™¸í•¨
         MIN(SALARY),
         MAX(SALARY),
-        COUNT(SALARY), -- Áö±Ý »óÈ²¿¡¼­´Â COUNT(*)µµ °¡´É.
+        COUNT(SALARY), -- ì§€ê¸ˆ ìƒí™©ì—ì„œëŠ” COUNT(*)ë„ ê°€ëŠ¥.
         COUNT(BONUS_PCT),
         MAX(HIRE_DATE),
         MIN(HIRE_DATE)
@@ -237,41 +237,41 @@ FROM    EMPLOYEE;
 
 SELECT *
 FROM    EMPLOYEE
-ORDER BY    SALARY DESC , EMP_NAME DESC; -- ¿À¸§Â÷¼ø[ASC]ÀÌ ±âº» µðÆúÆ®, [DESC] ³»¸²Â÷¼ø
+ORDER BY    SALARY DESC , EMP_NAME DESC; -- ì˜¤ë¦„ì°¨ìˆœ[ASC]ì´ ê¸°ë³¸ ë””í´íŠ¸, [DESC] ë‚´ë¦¼ì°¨ìˆœ
 
--- º°ÄªÀ» ±âÁØÀ¸·Î ORDER BY °¡´É
-SELECT  EMP_NAME AS ÀÌ¸§,
-        HIRE_DATE AS ÀÔ»çÀÏ,
-        DEPT_ID AS ºÎ¼­ÄÚµå
+-- ë³„ì¹­ì„ ê¸°ì¤€ìœ¼ë¡œ ORDER BY ê°€ëŠ¥
+SELECT  EMP_NAME AS ì´ë¦„,
+        HIRE_DATE AS ìž…ì‚¬ì¼,
+        DEPT_ID AS ë¶€ì„œì½”ë“œ
 FROM    EMPLOYEE
-ORDER BY    ºÎ¼­ÄÚµå DESC, ÀÔ»çÀÏ, ÀÌ¸§;  .
+ORDER BY    ë¶€ì„œì½”ë“œ DESC, ìž…ì‚¬ì¼, ì´ë¦„;  .
 
--- ÀÎµ¦½º »ç¿ë °¡´É
-SELECT  EMP_NAME AS ÀÌ¸§, --ÀÎµ¦½º 1
-        HIRE_DATE AS ÀÔ»çÀÏ,--ÀÎµ¦½º 2
-        DEPT_ID AS ºÎ¼­ÄÚµå --ÀÎµ¦½º 3
+-- ì¸ë±ìŠ¤ ì‚¬ìš© ê°€ëŠ¥
+SELECT  EMP_NAME AS ì´ë¦„, --ì¸ë±ìŠ¤ 1
+        HIRE_DATE AS ìž…ì‚¬ì¼,--ì¸ë±ìŠ¤ 2
+        DEPT_ID AS ë¶€ì„œì½”ë“œ --ì¸ë±ìŠ¤ 3
 FROM    EMPLOYEE
-ORDER BY    3 DESC, 2, 1; -- ORDER BY ÀÎµ¦½º
+ORDER BY    3 DESC, 2, 1; -- ORDER BY ì¸ë±ìŠ¤
 
 
--- GROUP BY: ÇÏÀ§ µ¥ÀÌÅÍ ±×·ì
-SELECT  DEPARTMENT_NO ÇÐ°ú¹øÈ£,
-        COUNT(*) "ÇÐ»ý¼ö(¸í)"
+-- GROUP BY: í•˜ìœ„ ë°ì´í„° ê·¸ë£¹
+SELECT  DEPARTMENT_NO í•™ê³¼ë²ˆí˜¸,
+        COUNT(*) "í•™ìƒìˆ˜(ëª…)"
 FROM    TB_STUDENT
 GROUP BY    DEPARTMENT_NO
 ORDER BY    1 ASC;
 
--- ºÎ¼­º° Æò±Õ ±Þ¿©¸¦ Á¶È¸ÇÑ´Ù¸é?
-SELECT  DEPT_ID ºÎ¼­,
-        FLOOR(AVG(SALARY)) Æò±Õ±Þ¿©
+-- ë¶€ì„œë³„ í‰ê·  ê¸‰ì—¬ë¥¼ ì¡°íšŒí•œë‹¤ë©´?
+SELECT  DEPT_ID ë¶€ì„œ,
+        FLOOR(AVG(SALARY)) í‰ê· ê¸‰ì—¬
 FROM    EMPLOYEE
 GROUP BY    DEPT_ID
 
--- ¼ºº°¿¡ µû¸¥ Æò±Õ ±Þ¿© Á¶È¸
-SELECT  CASE WHEN SUBSTR(EMP_NO,8,1) IN ('1','3') THEN 'MALE' ELSE 'FEMALE' END AS ¼ºº°,
-        FLOOR(AVG(SALARY)) Æò±Õ±Þ¿©
+-- ì„±ë³„ì— ë”°ë¥¸ í‰ê·  ê¸‰ì—¬ ì¡°íšŒ
+SELECT  CASE WHEN SUBSTR(EMP_NO,8,1) IN ('1','3') THEN 'MALE' ELSE 'FEMALE' END AS ì„±ë³„,
+        FLOOR(AVG(SALARY)) í‰ê· ê¸‰ì—¬
 FROM    EMPLOYEE
-GROUP BY    SUBSTR(EMP_NO,8,1);--CASE WHEN SUBSTR(EMP_NO,8,1) IN ('1','3') THEN 'MALE' ELSE 'FEMALE' END Ç¥Çö½ÄÀÌ µé¾î°¡´Â °Ô ´õ Á¤È®
+GROUP BY    SUBSTR(EMP_NO,8,1);--CASE WHEN SUBSTR(EMP_NO,8,1) IN ('1','3') THEN 'MALE' ELSE 'FEMALE' END í‘œí˜„ì‹ì´ ë“¤ì–´ê°€ëŠ” ê²Œ ë” ì •í™•
 
 SELECT  DEPT_ID,
         EMP_NAME,
@@ -283,49 +283,49 @@ SELECT  DEPT_ID,
         SUM(SALARY)
 FROM    EMPLOYEE
 GROUP BY    DEPT_ID
-HAVING  SUM(SALARY) > 9000000; -- GROUP ¿¡ ´ëÇÑ Á¶°ÇÀº HAVING, WHEREÀº Å×ÀÌºí¿¡ ´ëÇÑ Á¶°Ç
+HAVING  SUM(SALARY) > 9000000; -- GROUP ì— ëŒ€í•œ ì¡°ê±´ì€ HAVING, WHEREì€ í…Œì´ë¸”ì— ëŒ€í•œ ì¡°ê±´
 
 --ROLLUP()
 SELECT  DEPT_ID,
         JOB_ID,
         SUM(SALARY)
 FROM    EMPLOYEE
-GROUP BY    ROLLUP(DEPT_ID, JOB_ID); -- ¼Ò°è¿Í ´©Àû ÃÑ°èÃâ·Â
--- ROLLUP( (DEPT_ID, JOB_ID) ) °ýÈ£¸¦ ÀÌÁßÀ¸·Î ¾º¿ì¸é ¼Ò°èX,´©Àû ÃÑ°è¸¸ Ãâ·Â
+GROUP BY    ROLLUP(DEPT_ID, JOB_ID); -- ì†Œê³„ì™€ ëˆ„ì  ì´ê³„ì¶œë ¥
+-- ROLLUP( (DEPT_ID, JOB_ID) ) ê´„í˜¸ë¥¼ ì´ì¤‘ìœ¼ë¡œ ì”Œìš°ë©´ ì†Œê³„X,ëˆ„ì  ì´ê³„ë§Œ ì¶œë ¥
 
 SELECT  DEPT_ID,
         JOB_ID,
         SUM(SALARY)
 FROM    EMPLOYEE
-GROUP BY    DEPT_ID, ROLLUP(JOB_ID); -- ¼Ò°èO, ´©Àû ÃÑ°èX
+GROUP BY    DEPT_ID, ROLLUP(JOB_ID); -- ì†Œê³„O, ëˆ„ì  ì´ê³„X
 
 -- ERD
 -- EMPLOYEE, DEPARTMENT
--- PK´Â Áßº¹À» Çã¿ëÇÏÁö ¾Ê°í, NULL°ªÀ» Çã¿ëÇÏÁö ¾ÊÀ½.
--- FK´Â ºÎ¸ð¿¡ ÀÇÁ¸ÇÏ´Â µ¥ÀÌÅÍÀÌ°Å³ª ,NULL °ª Çã¿ë.
+-- PKëŠ” ì¤‘ë³µì„ í—ˆìš©í•˜ì§€ ì•Šê³ , NULLê°’ì„ í—ˆìš©í•˜ì§€ ì•ŠìŒ.
+-- FKëŠ” ë¶€ëª¨ì— ì˜ì¡´í•˜ëŠ” ë°ì´í„°ì´ê±°ë‚˜ ,NULL ê°’ í—ˆìš©.
 SELECT  *
 FROM    DEPARTMENT;
 
 SELECT  *
 FROM    EMPLOYEE;
 
--- »ç¿øÀÇ ÀÌ¸§, ºÎ¼­ÀÌ¸§ Á¶È¸
--- Áï, µÎ°³ÀÇ ÄÃ·³À» ÇÑ¹ø¿¡ º¼ ¼ö ÀÖ´Â ¹æ¹ý
+-- ì‚¬ì›ì˜ ì´ë¦„, ë¶€ì„œì´ë¦„ ì¡°íšŒ
+-- ì¦‰, ë‘ê°œì˜ ì»¬ëŸ¼ì„ í•œë²ˆì— ë³¼ ìˆ˜ ìžˆëŠ” ë°©ë²•
 -- JOIN
--- EQUALS JOIN ¾÷¹«Àû ¿¬°ü¼ºÀÌ ÀÖ°í, ºÎ¸ðÀÇ 
+-- EQUALS JOIN ì—…ë¬´ì  ì—°ê´€ì„±ì´ ìžˆê³ , ë¶€ëª¨ì˜ 
 SELECT  EMP_NAME,
         DEPT_NAME,
         E.DEPT_ID
-FROM    EMPLOYEE E,DEPARTMENT D -- Å×ÀÌºí¿¡¼­µµ º°Äª°¡´É AS ´Â ¾²Áö ¾Ê°í.
-WHERE   E.DEPT_ID = D.DEPT_ID; -- JOINÀ» ÇÒ ¶§ ¸ðÈ£¼ºÀÌ ¹ß»ýÇÒ ¼ö ÀÖ±â ¶§¹®¿¡ Å×ÀÌºí¿¡ º°ÄªÀ» ÁÜ
+FROM    EMPLOYEE E,DEPARTMENT D -- í…Œì´ë¸”ì—ì„œë„ ë³„ì¹­ê°€ëŠ¥ AS ëŠ” ì“°ì§€ ì•Šê³ .
+WHERE   E.DEPT_ID = D.DEPT_ID; -- JOINì„ í•  ë•Œ ëª¨í˜¸ì„±ì´ ë°œìƒí•  ìˆ˜ ìžˆê¸° ë•Œë¬¸ì— í…Œì´ë¸”ì— ë³„ì¹­ì„ ì¤Œ
 
--- ANSI JOIN Ç¥ÁØ Á¶ÀÎ
+-- ANSI JOIN í‘œì¤€ ì¡°ì¸
 /*
 SELECT
 FROM    TABLE1
-[INNER] JOIN    TABLE2 ON (CONDITION) -- ÇÊ¿ä¿¡ µû¶ó¼­ ON ºÎ¸ðÀÇ ¿Ü·¡Å°¿Í ÀÚ½ÄÀÇ ±âº»Å°°¡ °°À¸¸é. °ü°è°¡ ¾ø´Â µÎ Å×ÀÌºí¿¡¼­ÀÇ NOT EQUALS JOINÀº ONÀ¸·Î »ç¿ë.
-[INNER] JOIN    TABLE2 USING (COLUMN) -- ÇÊ¿ä¿¡ µû¶ó¼­ USING,µÎ °³ÀÇ Å×ÀÌºíÀÌ ³»ºÎ Á¶ÀÎÀ¸·Î Á¶ÀÎ µÉ ¶§ Á¶ÀÎÇÏ°íÀÚ ÇÏ´Â µÎ Å×ÀÌºíÀÇ ÄÃ·³¸íÀÌ °°À» °æ¿ì Á¶ÀÎ Á¶°ÇÀ» ±æ°Ô ÀûÁö ¾Ê°í °£´ÜÇÏ°Ô ÀûÀ» ¼ö ÀÖµµ·Ï ÇÏ´Â ¿ªÇÒ
--- OUTER JOIN: Á¶°Ç¿¡ ¸¸Á·ÇÏÁö ¾Ê´Â µ¥ÀÌÅÍ±îÁö Æ÷ÇÔ½ÃÅ°´Â Á¶ÀÎ.
+[INNER] JOIN    TABLE2 ON (CONDITION) -- í•„ìš”ì— ë”°ë¼ì„œ ON ë¶€ëª¨ì˜ ì™¸ëž˜í‚¤ì™€ ìžì‹ì˜ ê¸°ë³¸í‚¤ê°€ ê°™ìœ¼ë©´. ê´€ê³„ê°€ ì—†ëŠ” ë‘ í…Œì´ë¸”ì—ì„œì˜ NOT EQUALS JOINì€ ONìœ¼ë¡œ ì‚¬ìš©.
+[INNER] JOIN    TABLE2 USING (COLUMN) -- í•„ìš”ì— ë”°ë¼ì„œ USING,ë‘ ê°œì˜ í…Œì´ë¸”ì´ ë‚´ë¶€ ì¡°ì¸ìœ¼ë¡œ ì¡°ì¸ ë  ë•Œ ì¡°ì¸í•˜ê³ ìž í•˜ëŠ” ë‘ í…Œì´ë¸”ì˜ ì»¬ëŸ¼ëª…ì´ ê°™ì„ ê²½ìš° ì¡°ì¸ ì¡°ê±´ì„ ê¸¸ê²Œ ì ì§€ ì•Šê³  ê°„ë‹¨í•˜ê²Œ ì ì„ ìˆ˜ ìžˆë„ë¡ í•˜ëŠ” ì—­í• 
+-- OUTER JOIN: ì¡°ê±´ì— ë§Œì¡±í•˜ì§€ ì•ŠëŠ” ë°ì´í„°ê¹Œì§€ í¬í•¨ì‹œí‚¤ëŠ” ì¡°ì¸.
 LEFT | RIGHT | FULL [OUTER] JOIN    TABLE2 ON (CONDITION)
 LEFT | RIGHT | FULL [OUTER] JOIN    TABLE2 USING (COLUMN)
 */
@@ -336,9 +336,9 @@ SELECT  EMP_NAME,
         JOB_TITLE,
         LOC_DESCRIBE
 FROM    EMPLOYEE E
-JOIN    DEPARTMENT D USING(DEPT_ID) --USINGÀ» ¾µ ¶§ SELECT Àý¿¡ º°ÄªÀ» ¾²Áö¸øÇÔ
+JOIN    DEPARTMENT D USING(DEPT_ID) --USINGì„ ì“¸ ë•Œ SELECT ì ˆì— ë³„ì¹­ì„ ì“°ì§€ëª»í•¨
 JOIN    JOB        J  USING(JOB_ID)
-JOIN    LOCATION   L  ON (L.LOCATION_ID = D.LOC_ID); -- LOCATION TABLE¿¡ ±âº»Å°°¡ DEPARTMNET¿¡ ¿Ü·¡Å° LOC_ID¿Í µ¿ÀÏÇÏÁö ¾Ê±â¿¡ USING ºÒ°¡,ON »ç¿ë
+JOIN    LOCATION   L  ON (L.LOCATION_ID = D.LOC_ID); -- LOCATION TABLEì— ê¸°ë³¸í‚¤ê°€ DEPARTMNETì— ì™¸ëž˜í‚¤ LOC_IDì™€ ë™ì¼í•˜ì§€ ì•Šê¸°ì— USING ë¶ˆê°€,ON ì‚¬ìš©
 
 
 SELECT  EMP_NAME,
@@ -350,9 +350,9 @@ FROM    EMPLOYEE E
 JOIN    DEPARTMENT D ON(D.DEPT_ID = E.DEPT_ID)
 JOIN    JOB        J ON(E.JOB_ID = J.JOB_ID)
 JOIN    LOCATION   L  ON (L.LOCATION_ID = D.LOC_ID);
--- À§¿¡ ±îÁö°¡ ANSI Ç¥ÁØ JOIN
+-- ìœ„ì— ê¹Œì§€ê°€ ANSI í‘œì¤€ JOIN
 
--- ¿¬°á°í¸®°¡ ¾ø´Â µÎ Å×ÀÌºí °£ÀÇ Á¶ÀÎ
+-- ì—°ê²°ê³ ë¦¬ê°€ ì—†ëŠ” ë‘ í…Œì´ë¸” ê°„ì˜ ì¡°ì¸
 SELECT  *
 FROM    SAL_GRADE
 
@@ -363,19 +363,19 @@ FROM    EMPLOYEE
 JOIN    SAL_GRADE ON (SALARY BETWEEN LOWEST AND HIGHEST)
 ORDER BY    SLEVEL, SALARY DESC;
 
---OUTER JOIN ¿À¶óÅ¬
+--OUTER JOIN ì˜¤ë¼í´
 SELECT  EMP_NAME,
         DEPT_NAME
 FROM    EMPLOYEE E, DEPARTMENT D
-WHERE   E.DEPT_ID(+) = D.DEPT_ID -- ¿À¶óÅ¬ Àü¿ë: ÁÂÃøÀº LEFT OUTER JOIN (+) Ç¥½Ã°¡ ÀÖÀ½, RIGHT OUTER JOINÀº ¿À¸¥ÂÊ¿¡ (+), FULL OUTER JOINÀº ¿À¶óÅ¬¿¡¼­ Áö¿ø ¾ÈÇÔ.
+WHERE   E.DEPT_ID(+) = D.DEPT_ID -- ì˜¤ë¼í´ ì „ìš©: ì¢Œì¸¡ì€ LEFT OUTER JOIN (+) í‘œì‹œê°€ ìžˆìŒ, RIGHT OUTER JOINì€ ì˜¤ë¥¸ìª½ì— (+), FULL OUTER JOINì€ ì˜¤ë¼í´ì—ì„œ ì§€ì› ì•ˆí•¨.
 
---µû¶ó¼­ ANSI Ç¥ÁØÀ¸·Î LEFT RIGHT FULL OUTER JOIN 
+--ë”°ë¼ì„œ ANSI í‘œì¤€ìœ¼ë¡œ LEFT RIGHT FULL OUTER JOIN 
 SELECT  EMP_NAME,
         DEPT_NAME
 FROM    EMPLOYEE E
 FULL JOIN  DEPARTMENT D USING(DEPT_ID);
 
--- »ç¿øÀÇ ÀÌ¸§°ú »ç¼öÀÇ ÀÌ¸§À» ¼¿ÇÁÁ¶ÀÎÀ¸·Î Á¶È¸ÇÑ´Ù¸é?, »ç¼öÀÇ »ç¼ö´Â?
+-- ì‚¬ì›ì˜ ì´ë¦„ê³¼ ì‚¬ìˆ˜ì˜ ì´ë¦„ì„ ì…€í”„ì¡°ì¸ìœ¼ë¡œ ì¡°íšŒí•œë‹¤ë©´?, ì‚¬ìˆ˜ì˜ ì‚¬ìˆ˜ëŠ”?
 SELECT  E.EMP_NAME,
         M.EMP_NAME,
         S.EMP_NAME
@@ -383,7 +383,7 @@ FROM    EMPLOYEE E
 JOIN    EMPLOYEE M ON (E.MGR_ID = M.EMP_ID)
 JOIN    EMPLOYEE S ON (E.MGR_ID = S.EMP_ID)
 
--- LOC_DESCIRBE°¡ ¾Æ½Ã¾Æ·Î ½ÃÀÛÇÏ°í Á÷±ÞÀÌ ´ë¸®ÀÎ »ç¿øÀÇ ÀÌ¸§, ºÎ¼­ÀÌ¸§À» Á¶È¸
+-- LOC_DESCIRBEê°€ ì•„ì‹œì•„ë¡œ ì‹œìž‘í•˜ê³  ì§ê¸‰ì´ ëŒ€ë¦¬ì¸ ì‚¬ì›ì˜ ì´ë¦„, ë¶€ì„œì´ë¦„ì„ ì¡°íšŒ
 SELECT  LOC_DESCRIBE
 FROM    LOCATION
 
@@ -393,16 +393,16 @@ FROM    JOB
 JOIN    EMPLOYEE    USING(JOB_ID)
 JOIN    DEPARTMENT  USING(DEPT_ID)
 JOIN    LOCATION    ON(LOC_ID = LOCATION_ID)
-WHERE   LOC_DESCRIBE LIKE '¾Æ½Ã¾Æ%' AND JOB_TITLE = '´ë¸®';
+WHERE   LOC_DESCRIBE LIKE 'ì•„ì‹œì•„%' AND JOB_TITLE = 'ëŒ€ë¦¬';
 
--- SET ¿¬»êÀÚ
+-- SET ì—°ì‚°ìž
 /*
-µÎ °³ ÀÌ»óÀÇ Äõ¸® °á°ú¸¦ ÇÏ³ª·Î °áÇÕ½ÃÅ°´Â ¿¬»êÀÚ
-- UNION: ÇÕÁýÇÕ, Áßº¹ Á¦°Å
-- UNION ALL : ÇÕÁýÇÕ Áßº¹ Æ÷ÇÔ
-- INTERSECT : ±³ÁýÇÕ
-- MINUS : Â÷ÁýÇÕ
-ÁÖÀÇ) ¹Ýµå½Ã µ¿ÀÏ(ÄÃ·³ °³¼ö, µ¥ÀÌÅÍ Å¸ÀÔ)
+ë‘ ê°œ ì´ìƒì˜ ì¿¼ë¦¬ ê²°ê³¼ë¥¼ í•˜ë‚˜ë¡œ ê²°í•©ì‹œí‚¤ëŠ” ì—°ì‚°ìž
+- UNION: í•©ì§‘í•©, ì¤‘ë³µ ì œê±°
+- UNION ALL : í•©ì§‘í•© ì¤‘ë³µ í¬í•¨
+- INTERSECT : êµì§‘í•©
+- MINUS : ì°¨ì§‘í•©
+ì£¼ì˜) ë°˜ë“œì‹œ ë™ì¼(ì»¬ëŸ¼ ê°œìˆ˜, ë°ì´í„° íƒ€ìž…)
 */
 
 SELECT  EMP_ID,
@@ -425,18 +425,18 @@ SELECT  DEPT_NAME,
 FROM    DEPARTMENT
 WHERE   DEPT_ID = 20;
 
---UNION ºÎ¼­¹øÈ£°¡ 50¹ø ºÎ¼­ÀÇ ºÎ¼­¿øÀ» °ü¸®ÀÚ¿Í Á÷¿øÀ¸·Î ±¸ºÐÇÏ¿© »ç¿ø¹øÈ£,ÀÌ¸§,±¸ºÐÀ» Ç¥½Ã
--- °ü¸®ÀÚ¿Í Á÷¿øÀ» ±¸ºÐÇÏ´Â ±âÁØÀº EMP_ID = '141'ÀÌ¸é °ü¸®ÀÚ
+--UNION ë¶€ì„œë²ˆí˜¸ê°€ 50ë²ˆ ë¶€ì„œì˜ ë¶€ì„œì›ì„ ê´€ë¦¬ìžì™€ ì§ì›ìœ¼ë¡œ êµ¬ë¶„í•˜ì—¬ ì‚¬ì›ë²ˆí˜¸,ì´ë¦„,êµ¬ë¶„ì„ í‘œì‹œ
+-- ê´€ë¦¬ìžì™€ ì§ì›ì„ êµ¬ë¶„í•˜ëŠ” ê¸°ì¤€ì€ EMP_ID = '141'ì´ë©´ ê´€ë¦¬ìž
 
 SELECT  EMP_ID,
         EMP_NAME,
-        '°ü¸®ÀÚ' AS ±¸ºÐ
+        'ê´€ë¦¬ìž' AS êµ¬ë¶„
 FROM    EMPLOYEE
 WHERE   DEPT_ID = '50' AND EMP_ID = '141'
 UNION
 SELECT  EMP_ID,
         EMP_NAME,
-        'Á÷¿ø' AS ±¸ºÐ
+        'ì§ì›' AS êµ¬ë¶„
 FROM    EMPLOYEE
 WHERE   DEPT_ID = '50' AND EMP_ID != '141'
 ORDER BY 3;
@@ -446,67 +446,67 @@ SELECT  EMP_NAME,
         JOB_TITLE
 FROM    EMPLOYEE
 JOIN    JOB USING(JOB_ID)
-WHERE   JOB_TITLE IN ('´ë¸®' , '»ç¿ø');
+WHERE   JOB_TITLE IN ('ëŒ€ë¦¬' , 'ì‚¬ì›');
 
 
--- À§ ±¸¹®À» UNIONÀ¸·Î Ç¥Çö
+-- ìœ„ êµ¬ë¬¸ì„ UNIONìœ¼ë¡œ í‘œí˜„
 SELECT  EMP_NAME,
         JOB_TITLE
 FROM    EMPLOYEE
 JOIN    JOB USING(JOB_ID)
-WHERE   JOB_TITLE = '´ë¸®'
+WHERE   JOB_TITLE = 'ëŒ€ë¦¬'
 UNION
 SELECT  EMP_NAME,
         JOB_TITLE
 FROM    EMPLOYEE
 JOIN    JOB USING(JOB_ID)
-WHERE   JOB_TITLE = '»ç¿ø'
+WHERE   JOB_TITLE = 'ì‚¬ì›'
 ORDER BY 2, 1;
 --day04
--- SUBQUERY, DDL(CONSTRAINT Á¦¾à)
+-- SUBQUERY, DDL(CONSTRAINT ì œì•½)
 
--- SUBQUERY ¼­ºêÄõ¸®(ÇÏ³ªÀÇ Äõ¸®°¡ ´Ù¸¥ Äõ¸®¸¦ Æ÷ÇÔÇÏ´Â ±¸Á¶)
+-- SUBQUERY ì„œë¸Œì¿¼ë¦¬(í•˜ë‚˜ì˜ ì¿¼ë¦¬ê°€ ë‹¤ë¥¸ ì¿¼ë¦¬ë¥¼ í¬í•¨í•˜ëŠ” êµ¬ì¡°)
 /*
 SELECT  EXPR(SELECT) -- SCALLAR SUBQUERY
 FORM    (SELECT) -- INLINE VIEW
-WHERE   (SELECT) -- SUBQUERY, Áï EXPR OPERATOR (SUBQUERY)
+WHERE   (SELECT) -- SUBQUERY, ì¦‰ EXPR OPERATOR (SUBQUERY)
 GROUP BY (SELECT)
 HAVING  (SELECT)
-Áï,¸ÞÀÎ Äõ¸® ¾È¿¡ ¼­ºêÄõ¸® µé¾î°¥ ¼ö ÀÖÀ½.
+ì¦‰,ë©”ì¸ ì¿¼ë¦¬ ì•ˆì— ì„œë¸Œì¿¼ë¦¬ ë“¤ì–´ê°ˆ ìˆ˜ ìžˆìŒ.
 
-À¯Çü
-- ´ÜÀÏ Çà ¼­ºêÄõ¸® (¸®ÅÏ µÇ´Â ·¹ÄÚµå °Ç¼ö°¡ 1°³), (´ÜÀÏ ÄÃ¸², ´ÙÁßÄÃ·³)
-- ´ÙÁß Çà ¼­ºêÄõ¸® (´ÜÀÏ ÄÃ·³, ´ÙÁß ÄÃ·³)-( IN, ANY, ALL)¿¬»êÀÚ¸¦ »ç¿ë.
+ìœ í˜•
+- ë‹¨ì¼ í–‰ ì„œë¸Œì¿¼ë¦¬ (ë¦¬í„´ ë˜ëŠ” ë ˆì½”ë“œ ê±´ìˆ˜ê°€ 1ê°œ), (ë‹¨ì¼ ì»¬ë¦¼, ë‹¤ì¤‘ì»¬ëŸ¼)
+- ë‹¤ì¤‘ í–‰ ì„œë¸Œì¿¼ë¦¬ (ë‹¨ì¼ ì»¬ëŸ¼, ë‹¤ì¤‘ ì»¬ëŸ¼)-( IN, ANY, ALL)ì—°ì‚°ìžë¥¼ ì‚¬ìš©.
 */
--- '³ª½Â¿ø' Á÷¿ø°ú °°Àº ºÎ¼­¿øÀ» Á¶È¸
+-- 'ë‚˜ìŠ¹ì›' ì§ì›ê³¼ ê°™ì€ ë¶€ì„œì›ì„ ì¡°íšŒ
 SELECT  *
 FROM    EMPLOYEE
-WHERE   EMP_NAME = '³ª½Â¿ø' --¿©±â¼­ DEPT_ID°¡ 50ÀÌ¶ó´Â °ÍÀ» È®ÀÎ
+WHERE   EMP_NAME = 'ë‚˜ìŠ¹ì›' --ì—¬ê¸°ì„œ DEPT_IDê°€ 50ì´ë¼ëŠ” ê²ƒì„ í™•ì¸
 
 
 SELECT  *
 FROM    EMPLOYEE
 WHERE   DEPT_ID = (SELECT  DEPT_ID
                     FROM    EMPLOYEE
-                    WHERE   EMP_NAME = '³ª¼º¿ø');
+                    WHERE   EMP_NAME = 'ë‚˜ì„±ì›');
 
--- '³ª½Â¿ø' Á÷¿ø°ú °°Àº Á÷±ÞÀÌ¸é¼­ ±Þ¿©°¡ '³ª½Â¿ø' º¸´Ù ¸¹ÀÌ ¹Þ´Â Á÷¿øÀ» Á¶È¸ÇÑ´Ù¸é?
+-- 'ë‚˜ìŠ¹ì›' ì§ì›ê³¼ ê°™ì€ ì§ê¸‰ì´ë©´ì„œ ê¸‰ì—¬ê°€ 'ë‚˜ìŠ¹ì›' ë³´ë‹¤ ë§Žì´ ë°›ëŠ” ì§ì›ì„ ì¡°íšŒí•œë‹¤ë©´?
 SELECT  *
 FROM    EMPLOYEE
 WHERE   JOB_ID = (SELECT    JOB_ID
                     FROM    EMPLOYEE
-                    WHERE   EMP_NAME = '³ª½Â¿ø')
+                    WHERE   EMP_NAME = 'ë‚˜ìŠ¹ì›')
 AND      SALARY > (SELECT    SALARY
                     FROM    EMPLOYEE
-                    WHERE   EMP_NAME = '³ª½Â¿ø')
+                    WHERE   EMP_NAME = 'ë‚˜ìŠ¹ì›')
 
--- ÃÖÀú±Þ¿©¸¦ ¹Þ´Â »ç¿øÀÇ Á¤º¸¸¦ °Ë»ö
+-- ìµœì €ê¸‰ì—¬ë¥¼ ë°›ëŠ” ì‚¬ì›ì˜ ì •ë³´ë¥¼ ê²€ìƒ‰
 SELECT  *
 FROM    EMPLOYEE
 WHERE   SALARY = (SELECT    MIN(SALARY)
                     FROM    EMPLOYEE);
                     
--- ºÎ¼­º° ±Þ¿©ÃÑÇÕÀÌ °¡Àå ³ôÀº ºÎ¼­ÀÇ ºÎ¼­ÀÌ¸§, ±Þ¿© ÃÑÇÕÀ» Á¶È¸
+-- ë¶€ì„œë³„ ê¸‰ì—¬ì´í•©ì´ ê°€ìž¥ ë†’ì€ ë¶€ì„œì˜ ë¶€ì„œì´ë¦„, ê¸‰ì—¬ ì´í•©ì„ ì¡°íšŒ
 SELECT  DEPT_NAME,
         SUM(SALARY)
 FROM    EMPLOYEE
@@ -517,72 +517,72 @@ HAVING  SUM(SALARY) = (SELECT   MAX(SUM(SALARY))
                         GROUP BY DEPT_ID);
 
 /*
-´ÙÁß Çà ¼­ºêÄõ¸®
+ë‹¤ì¤‘ í–‰ ì„œë¸Œì¿¼ë¦¬
 > ANY, < ANY
 > ALL, < ALL
 */
--- °ü¸®ÀÚµé¸¸ Á¶È¸(Áï MGR_ID¿¡ EMP_ID°¡ ÀÖ´Ù¸é °ü¸®ÀÚ)
+-- ê´€ë¦¬ìžë“¤ë§Œ ì¡°íšŒ(ì¦‰ MGR_IDì— EMP_IDê°€ ìžˆë‹¤ë©´ ê´€ë¦¬ìž)
 
 SELECT  EMP_ID,
         EMP_NAME,
-        '°ü¸®ÀÚ' AS "°ü¸®ÀÚ À¯¹«"
+        'ê´€ë¦¬ìž' AS "ê´€ë¦¬ìž ìœ ë¬´"
 FROM    EMPLOYEE
-WHERE   EMP_ID IN (SELECT   MGR_ID  -- ¼­ºêÄõ¸®°¡ ´ÙÁß Çà ÀÌ¹Ç·Î WHEREÀý¿¡ IN( ´ÙÁßÇà ¿¬»êÀÚ¸¦ ¾¸)
+WHERE   EMP_ID IN (SELECT   MGR_ID  -- ì„œë¸Œì¿¼ë¦¬ê°€ ë‹¤ì¤‘ í–‰ ì´ë¯€ë¡œ WHEREì ˆì— IN( ë‹¤ì¤‘í–‰ ì—°ì‚°ìžë¥¼ ì”€)
                     FROM    EMPLOYEE)
 UNION     
 SELECT  EMP_ID,
         EMP_NAME,
-        'Á÷¿ø' AS "°ü¸®ÀÚ À¯¹«"
+        'ì§ì›' AS "ê´€ë¦¬ìž ìœ ë¬´"
 FROM    EMPLOYEE
-WHERE   EMP_ID NOT IN (SELECT   MGR_ID  -- ¼­ºêÄõ¸®°¡ NULL °ªÀÌ ÀÖÀ¸¸é NOT IN À» ¾²¸é NULLÀÌ ¸®ÅÏµÊ
+WHERE   EMP_ID NOT IN (SELECT   MGR_ID  -- ì„œë¸Œì¿¼ë¦¬ê°€ NULL ê°’ì´ ìžˆìœ¼ë©´ NOT IN ì„ ì“°ë©´ NULLì´ ë¦¬í„´ë¨
                         FROM    EMPLOYEE
-                        WHERE   MGR_ID IS NOT NULL) --µû¶ó¼­ IS NOT NULL ·Î NULL Á¦°Å ÈÄ NOT IN »ç¿ë
+                        WHERE   MGR_ID IS NOT NULL) --ë”°ë¼ì„œ IS NOT NULL ë¡œ NULL ì œê±° í›„ NOT IN ì‚¬ìš©
 ORDER BY 3;
 
--- ´ë¸®Á÷±ÞÀÇ »ç¿øÀÇ ÀÌ¸§, ±Þ¿© Á¶È¸
--- °úÀå Á÷±ÞÀÇ »ç¿øÀÇ ÀÌ¸§, ±Þ¿© Á¶È¸
+-- ëŒ€ë¦¬ì§ê¸‰ì˜ ì‚¬ì›ì˜ ì´ë¦„, ê¸‰ì—¬ ì¡°íšŒ
+-- ê³¼ìž¥ ì§ê¸‰ì˜ ì‚¬ì›ì˜ ì´ë¦„, ê¸‰ì—¬ ì¡°íšŒ
 SELECT  EMP_NAME,JOB_TITLE,
         SALARY
 FROM    EMPLOYEE
 JOIN    JOB USING(JOB_ID)
-WHERE   JOB_TITLE = '´ë¸®'
+WHERE   JOB_TITLE = 'ëŒ€ë¦¬'
 UNION
 SELECT  EMP_NAME,JOB_TITLE,
         SALARY
 FROM    EMPLOYEE
 JOIN    JOB USING(JOB_ID)
-WHERE   JOB_TITLE = '°úÀå'
+WHERE   JOB_TITLE = 'ê³¼ìž¥'
 ORDER BY 2;
 
--- °úÀåÁ÷±Þº¸´Ù ¸¹Àº ±Þ¿©¸¦ ¹Þ´Â ´ë¸®Á÷ÀÇ »ç¿øÀÌ¸§, ±Þ¿©¸¦ Á¶È¸
+-- ê³¼ìž¥ì§ê¸‰ë³´ë‹¤ ë§Žì€ ê¸‰ì—¬ë¥¼ ë°›ëŠ” ëŒ€ë¦¬ì§ì˜ ì‚¬ì›ì´ë¦„, ê¸‰ì—¬ë¥¼ ì¡°íšŒ
 SELECT  EMP_NAME,
         SALARY
 FROM    EMPLOYEE
 JOIN    JOB USING(JOB_ID)
-WHERE   JOB_TITLE = '´ë¸®'
-AND  SALARY > ANY (SELECT    SALARY -- < ANY, <ALL > ALL ±¸ºÐÇÏ±â, ¿©±â¼± >ANY´Ï±î °úÀå±Þ ±Þ¿©ÀÇ ÃÖ¼ÒÇÑµµ º¸´Ù Å« ´ë¸® »ç¿øµé Ãâ·Â
+WHERE   JOB_TITLE = 'ëŒ€ë¦¬'
+AND  SALARY > ANY (SELECT    SALARY -- < ANY, <ALL > ALL êµ¬ë¶„í•˜ê¸°, ì—¬ê¸°ì„  >ANYë‹ˆê¹Œ ê³¼ìž¥ê¸‰ ê¸‰ì—¬ì˜ ìµœì†Œí•œë„ ë³´ë‹¤ í° ëŒ€ë¦¬ ì‚¬ì›ë“¤ ì¶œë ¥
                         FROM    EMPLOYEE
                         JOIN    JOB USING(JOB_ID)
-                        WHERE   JOB_TITLE = '°úÀå')
--- Á÷±Þº°(JOB_TLTLE) Æò±Õ ±Þ¿©¸¦ Á¶È¸, Á¤¼ö 5ÀÚ¸®¿¡¼­ Àý»è
-SELECT  JOB_TITLE, -- 2. ÀÌ ºÎºÐÀº ¹Ù·Î ¸ø¾²±â¿¡ GROUP BY¸¦ »ç¿ë
-        TRUNC(AVG(SALARY),-5) -- 1.¿©±â ¶§¹®¿¡
+                        WHERE   JOB_TITLE = 'ê³¼ìž¥')
+-- ì§ê¸‰ë³„(JOB_TLTLE) í‰ê·  ê¸‰ì—¬ë¥¼ ì¡°íšŒ, ì •ìˆ˜ 5ìžë¦¬ì—ì„œ ì ˆì‚­
+SELECT  JOB_TITLE, -- 2. ì´ ë¶€ë¶„ì€ ë°”ë¡œ ëª»ì“°ê¸°ì— GROUP BYë¥¼ ì‚¬ìš©
+        TRUNC(AVG(SALARY),-5) -- 1.ì—¬ê¸° ë•Œë¬¸ì—
 FROM    EMPLOYEE
 JOIN    JOB USING(JOB_ID)
 GROUP BY    JOB_TITLE;
 
--- ÀÚ±â Á÷±ÞÀÇ Æò±Õ ±Þ¿©¸¦ ¹Þ´Â Á÷¿øÀÇ ÀÌ¸§, Á÷±Þ, ±Þ¿© Á¶È¸(´ÙÁßÇà ´ÙÁß ¿­ ¼­ºêÄõ¸®)
+-- ìžê¸° ì§ê¸‰ì˜ í‰ê·  ê¸‰ì—¬ë¥¼ ë°›ëŠ” ì§ì›ì˜ ì´ë¦„, ì§ê¸‰, ê¸‰ì—¬ ì¡°íšŒ(ë‹¤ì¤‘í–‰ ë‹¤ì¤‘ ì—´ ì„œë¸Œì¿¼ë¦¬)
 SELECT  EMP_NAME,
         JOB_TITLE,
         SALARY
 FROM    EMPLOYEE
 JOIN    JOB USING(JOB_ID)
-WHERE   (JOB_TITLE, SALARY) IN (SELECT   JOB_TITLE, TRUNC(AVG(SALARY),-5) --´ÙÁß Çà ´ÙÁß ¿­ ¼­ºêÄõ¸®
+WHERE   (JOB_TITLE, SALARY) IN (SELECT   JOB_TITLE, TRUNC(AVG(SALARY),-5) --ë‹¤ì¤‘ í–‰ ë‹¤ì¤‘ ì—´ ì„œë¸Œì¿¼ë¦¬
                                 FROM    EMPLOYEE
                                 JOIN    JOB USING(JOB_ID)
                                 GROUP BY    JOB_TITLE);
                     
--- À§¿¡ ¹®Á¦¸¦ FROMÀÇ ¼­ºêÄõ¸®·Î Ç®±â                   
+-- ìœ„ì— ë¬¸ì œë¥¼ FROMì˜ ì„œë¸Œì¿¼ë¦¬ë¡œ í’€ê¸°                   
 SELECT  E.EMP_NAME,
         JOB_TITLE,
         V.JOBAVG
@@ -595,8 +595,8 @@ JOIN    EMPLOYEE E ON (JOBAVG = SALARY AND E.JOB_ID = V.JOB_ID)
 JOIN    JOB J ON(J.JOB_ID = E.JOB_ID);
                     
                     
--- »ó°ü°ü°è ¼­ºêÄõ¸®
--- ¸ÞÀÎÄõ¸®¿¡¼­ Ã³¸®µÇ´Â °¢ ÇàÀÇ °ª¿¡ µû¶ó¼­ ¼­ºêÄõ¸®ÀÇ °á°ú°ªÀÌ ´Þ¶óÁö´Â °æ¿ì
+-- ìƒê´€ê´€ê³„ ì„œë¸Œì¿¼ë¦¬
+-- ë©”ì¸ì¿¼ë¦¬ì—ì„œ ì²˜ë¦¬ë˜ëŠ” ê° í–‰ì˜ ê°’ì— ë”°ë¼ì„œ ì„œë¸Œì¿¼ë¦¬ì˜ ê²°ê³¼ê°’ì´ ë‹¬ë¼ì§€ëŠ” ê²½ìš°
 SELECT  EMP_NAME,
         JOB_TITLE,
         SALARY
@@ -604,21 +604,21 @@ FROM    EMPLOYEE E
 JOIN    JOB J ON (E.JOB_ID = J.JOB_ID)
 WHERE   SALARY = (SELECT    TRUNC(AVG(SALARY),-5)
                     FROM    EMPLOYEE
-                    WHERE   JOB_ID = E.JOB_ID); --¸ÞÀÎÄõ¸®ÀÇ JOB_ID°¡ ¼­ºêÄõ¸®·Î µé¾î°¡´Â °Í.
+                    WHERE   JOB_ID = E.JOB_ID); --ë©”ì¸ì¿¼ë¦¬ì˜ JOB_IDê°€ ì„œë¸Œì¿¼ë¦¬ë¡œ ë“¤ì–´ê°€ëŠ” ê²ƒ.
                 
 --DAY05
 -- DDL(DATA DEFINITION LANGUAGE)
 /*
-TABLE(¹°¸®ÀûÀÎ ¸Þ¸ð¸® °ø°£)
-VIEW(³í¸®ÀûÀÎ ¸Þ¸ð¸® °ø°£)
+TABLE(ë¬¼ë¦¬ì ì¸ ë©”ëª¨ë¦¬ ê³µê°„)
+VIEW(ë…¼ë¦¬ì ì¸ ë©”ëª¨ë¦¬ ê³µê°„)
 SEQUENCE
 INDEX
 
 -- CONSTRAINT( PRIMARY KEY, FOREIGN KEY, NOT NULL, UNIQUE, CHECK)
---  UNIQUE ¿Í NOT NULLÀ» °áÇÕÇÏ¸é PRIMARY KEY°¡ µÊ.
--- µ¥ÀÌÅÍÀÇ ¹«°á¼º, µ¥ÀÌÅÍÀÇ Áßº¹À» ÇÇÇÒ ¼ö ÀÖ´Ù.
+--  UNIQUE ì™€ NOT NULLì„ ê²°í•©í•˜ë©´ PRIMARY KEYê°€ ë¨.
+-- ë°ì´í„°ì˜ ë¬´ê²°ì„±, ë°ì´í„°ì˜ ì¤‘ë³µì„ í”¼í•  ìˆ˜ ìžˆë‹¤.
 
-Å×ÀÌºíÀ» ¸¸µå´Â[±âº»±¸¹®]
+í…Œì´ë¸”ì„ ë§Œë“œëŠ”[ê¸°ë³¸êµ¬ë¬¸]
 CREATE TABLE TABLE_NAME(
     COLUMN_NAME DATATYPE [DEFAULT EXPR] [COLUMN_CONSTARINT],
     [TABLE_CONSTRAINT]
@@ -626,7 +626,7 @@ CREATE TABLE TABLE_NAME(
 -- INSERT
 INSERT INTO TABLE_NAME(COLUMN) VALUES(?,?,?,?)
 */
--- DROP TABLE TABLE_NAME: Å×ÀÌºí »èÁ¦
+-- DROP TABLE TABLE_NAME: í…Œì´ë¸” ì‚­ì œ
 CREATE TABLE TEST01(
     ID  NUMBER(5),
     NAME    VARCHAR2(50),
@@ -635,20 +635,20 @@ CREATE TABLE TEST01(
 );
 
 INSERT INTO TEST01(ID,NAME,ADDRESS)
-VALUES(100,'ÀÌÁöÇü','¼­¿ï');
+VALUES(100,'ì´ì§€í˜•','ì„œìš¸');
 
 INSERT INTO TEST01(ID,NAME,ADDRESS)
-VALUES(100,'ÀÌÁöÇü','¼­¿ï', NULL);
+VALUES(100,'ì´ì§€í˜•','ì„œìš¸', NULL);
 
 INSERT INTO TEST01(ID,NAME,ADDRESS)
-VALUES(100,'ÀÌÁöÇü','¼­¿ï',DEFAULT);
+VALUES(100,'ì´ì§€í˜•','ì„œìš¸',DEFAULT);
 
 SELECT  *
 FROM    TEST01;
 
 DROP TABLE TEST01;
 
---NOT NULL : ÄÃ·³¿¡ ´ëÇÑ Á¦¾àÀº °¡´ÉÇÏ³ª Å×ÀÌºí¿¡ ´ëÇÑ Á¦¾àÀº ºÒ°¡.
+--NOT NULL : ì»¬ëŸ¼ì— ëŒ€í•œ ì œì•½ì€ ê°€ëŠ¥í•˜ë‚˜ í…Œì´ë¸”ì— ëŒ€í•œ ì œì•½ì€ ë¶ˆê°€.
 -- DROP TABLE TEST_NN;
 CREATE TABLE TEST_NN(
     ID      VARCHAR2(50) UNIQUE,
@@ -661,47 +661,47 @@ DROP TABLE TEST_NN;
 SELECT  *
 FROM    TEST_NN
 
--- PRIMARY KEY: Å×ÀÌºí ´ç 1°³¸¸ °¡´É
+-- PRIMARY KEY: í…Œì´ë¸” ë‹¹ 1ê°œë§Œ ê°€ëŠ¥
 -- NOT NULL + UNIQUE
 --DROP TABLE TEST_PK
 CREATE TABLE TEST_PK(
     ID  VARCHAR2(50),
     NAME    VARCHAR2(50),
-    PRIMARY KEY(ID, NAME) -- TABLE LEVELÀÇ Á¦¾à ¿©±â¼­ ID¿Í NAME µÎ °³¸¦ PK
+    PRIMARY KEY(ID, NAME) -- TABLE LEVELì˜ ì œì•½ ì—¬ê¸°ì„œ IDì™€ NAME ë‘ ê°œë¥¼ PK
 );
 INSERT INTO TEST_PK
-VALUES('JSLIM','ÀÓ¼·¼ø');
+VALUES('JSLIM','ìž„ì„­ìˆœ');
 INSERT INTO TEST_PK
 VALUES('JSLIM','JSLIM');
 SELECT  *
 FROM    TEST_PK
 
---FOREIGN KEY(Å×ÀÌºí¿¡ ´ëÇÑ ¿Ü·¡Å° Á¦¾à) , REFFERENCES(ÄÃ·³ ·¹º§¿¡ ´ëÇÑ ¿Ü·¡Å° Á¦¾à)
--- ºÎ¸ð¿¡ ÀÇÁ¸ÇÏ´Â µ¥ÀÌÅÍÀÌ°Å³ª NULLÀ» Çã¿ëÇÑ´Ù.
--- Å×ÀÌºíÀº ¸¸µå´Â ¼ø¼­µµ Áß¿ä! ºÎ¸ð Å×ÀÌºí ¸ÕÀú »ý¼º
+--FOREIGN KEY(í…Œì´ë¸”ì— ëŒ€í•œ ì™¸ëž˜í‚¤ ì œì•½) , REFFERENCES(ì»¬ëŸ¼ ë ˆë²¨ì— ëŒ€í•œ ì™¸ëž˜í‚¤ ì œì•½)
+-- ë¶€ëª¨ì— ì˜ì¡´í•˜ëŠ” ë°ì´í„°ì´ê±°ë‚˜ NULLì„ í—ˆìš©í•œë‹¤.
+-- í…Œì´ë¸”ì€ ë§Œë“œëŠ” ìˆœì„œë„ ì¤‘ìš”! ë¶€ëª¨ í…Œì´ë¸” ë¨¼ì € ìƒì„±
 
 -- DML(DELETE ~~~~)
--- REFERENCES [ON DELETE SET NULL]:ÀÌ·± ¿É¼ÇÀ» ÁÖ¸é ºÎ¸ðÅ×ÀÌºíÀ» »èÁ¦ ÂüÁ¶ÇÏ°í ÀÖ´Â ÀÚ½Ä ·¹ÄÚµå´Â NULL·Î ¸¸µê
--- REFERENCES [ON DELETE CASCADE]:ºÎ¸ð Å×ÀÌºí ¹× ÂüÁ¶ÇÏ´Â ÀÚ½Ä ·¹ÄÚµåµé »èÁ¦, ÂüÁ¶ÇÏ°í ÀÖ´Â ·¹ÄÚµå´Â ÀüºÎ´Ù »èÁ¦
+-- REFERENCES [ON DELETE SET NULL]:ì´ëŸ° ì˜µì…˜ì„ ì£¼ë©´ ë¶€ëª¨í…Œì´ë¸”ì„ ì‚­ì œ ì°¸ì¡°í•˜ê³  ìžˆëŠ” ìžì‹ ë ˆì½”ë“œëŠ” NULLë¡œ ë§Œë“¦
+-- REFERENCES [ON DELETE CASCADE]:ë¶€ëª¨ í…Œì´ë¸” ë° ì°¸ì¡°í•˜ëŠ” ìžì‹ ë ˆì½”ë“œë“¤ ì‚­ì œ, ì°¸ì¡°í•˜ê³  ìžˆëŠ” ë ˆì½”ë“œëŠ” ì „ë¶€ë‹¤ ì‚­ì œ
 
 CREATE TABLE LOC(
     LOCATION_ID     VARCHAR2(50) PRIMARY KEY,
     LOC_DESCRIBE    VARCHAR2(50)
 );
-INSERT INTO LOC VALUES(10, '¾Æ½Ã¾Æ');
-INSERT INTO LOC VALUES(20, 'À¯·´');
+INSERT INTO LOC VALUES(10, 'ì•„ì‹œì•„');
+INSERT INTO LOC VALUES(20, 'ìœ ëŸ½');
 SELECT  *
 FROM    LOC;
 --DROP TABLE DEPT;
 CREATE TABLE DEPT(
     DEPT_ID NUMBER(5)   PRIMARY KEY,
     DEPI_NAME   VARCHAR2(50),
-    LOC_ID      VARCHAR2(50) NOT NULL, -- NOT NULLÀ» ³Ö¾îÁÖ¾î LOC_ID´Â ¿Ü·¡Å°ÀÌ¸é¼­ NULLÀ» Çã¿ëÇÏÁö ¾Ê°Ô ¸¸µê.
+    LOC_ID      VARCHAR2(50) NOT NULL, -- NOT NULLì„ ë„£ì–´ì£¼ì–´ LOC_IDëŠ” ì™¸ëž˜í‚¤ì´ë©´ì„œ NULLì„ í—ˆìš©í•˜ì§€ ì•Šê²Œ ë§Œë“¦.
     FOREIGN KEY(LOC_ID) REFERENCES LOC(LOCATION_ID)
 );
-INSERT INTO DEPT VALUES(10, 'ÀÎ»çÆÀ',10);
-INSERT INTO DEPT VALUES(20, '±³À°ÆÀ',20);
-INSERT INTO DEPT VALUES(30, 'È¸°èÆÀ',20);
+INSERT INTO DEPT VALUES(10, 'ì¸ì‚¬íŒ€',10);
+INSERT INTO DEPT VALUES(20, 'êµìœ¡íŒ€',20);
+INSERT INTO DEPT VALUES(30, 'íšŒê³„íŒ€',20);
 SELECT  *
 FROM    DEPT;
 
@@ -709,7 +709,7 @@ SELECT  DEPT_NAME,
         LOC_DESC
 FROM    DEPT
 JOIN    LOC ON(
---DROP TABLE EMP; ºÎ¸ð¿Í ÀÚ½Ä°£ ¿¬°áÀÌ µÇ¾îÀÖÀ¸¸é DROPÀº ÀÚ½ÄºÎÅÍ ¸ÕÀú ÇØ¾ßÇÔ.
+--DROP TABLE EMP; ë¶€ëª¨ì™€ ìžì‹ê°„ ì—°ê²°ì´ ë˜ì–´ìžˆìœ¼ë©´ DROPì€ ìžì‹ë¶€í„° ë¨¼ì € í•´ì•¼í•¨.
 CREATE TABLE EMP(
     EMP_ID  VARCHAR2(50) PRIMARY KEY,
     EMP_NAME    VARCHAR2(50),
@@ -720,13 +720,13 @@ INSERT INTO EMP VALUES('200','JSLIM',NULL);
 SELECT  *
 FROM    EMP;
 
--- COMPOSITE PRIMARY KEYÀÏ °æ¿ì
+-- COMPOSITE PRIMARY KEYì¼ ê²½ìš°
 -- DROP TABLE SUPER_PK CASCADE CONSTRAINTS;
 CREATE TABLE SUPER_PK(
     U_ID    VARCHAR2(20),
     P_ID    VARCHAR2(20),
     O_DATE  DATE,
-    AMOUNT  NUMBER, -- NUMBER()´Â »çÀÌÁî¸¦ ¾È Áàµµ µÊ.
+    AMOUNT  NUMBER, -- NUMBER()ëŠ” ì‚¬ì´ì¦ˆë¥¼ ì•ˆ ì¤˜ë„ ë¨.
     PRIMARY KEY(U_ID,P_ID)
 );
 INSERT INTO SUPER_PK VALUES('JSLIM','P100',SYSDATE,10000);
@@ -737,7 +737,7 @@ CREATE TABLE SUB_FK(
     P_ID    VARCHAR2(20),
     FOREIGN KEY(U_ID,P_ID) REFERENCES SUPER_PK(U_ID,P_ID) ON DELETE CASCADE);
     
--- SUB_ID,U_ID,P_ID ¼ÂÀ» (µÎ°³´Â ¿Ü·¡Å°ÀÌÀÚ) ±âº»Å°·Î.
+-- SUB_ID,U_ID,P_ID ì…‹ì„ (ë‘ê°œëŠ” ì™¸ëž˜í‚¤ì´ìž) ê¸°ë³¸í‚¤ë¡œ.
 CREATE TABLE SUB_FK(
     SUB_ID  VARCHAR2(20),
     U_ID    VARCHAR2(20),
@@ -752,13 +752,13 @@ FROM    SUB_FK;
 DROP TABLE SUB_FK;
 
 -- CHECK
--- Á¶°ÇÀ» Á¤ÀÇÇÒ ¶§ º¯ÇÏ´Â °ªÀ» Á¶°ÇÀ¸·Î »ç¿ëÇÒ ¼ö ¾ø´Ù.
+-- ì¡°ê±´ì„ ì •ì˜í•  ë•Œ ë³€í•˜ëŠ” ê°’ì„ ì¡°ê±´ìœ¼ë¡œ ì‚¬ìš©í•  ìˆ˜ ì—†ë‹¤.
 -- DROP TABLE TEST_CK;
 CREATE TABLE TEST_CK(
     ID  VARCHAR2(50) PRIMARY KEY,
     SALARY  NUMBER,
-    --HIRE_DATE DATE CHECK(HIRE_DATE < SYSDATE), SYSDATE´Â º¯ÇÏ´Â º¯¼öÀÌ±â ¶§¹®¿¡ CHECK ºÒ°¡.
-    MARRIAGE CHAR(1), -- È¤ÀºÄÃ·³¿¡ CHECK(MARIAGE IN('Y','N'))
+    --HIRE_DATE DATE CHECK(HIRE_DATE < SYSDATE), SYSDATEëŠ” ë³€í•˜ëŠ” ë³€ìˆ˜ì´ê¸° ë•Œë¬¸ì— CHECK ë¶ˆê°€.
+    MARRIAGE CHAR(1), -- í˜¹ì€ì»¬ëŸ¼ì— CHECK(MARIAGE IN('Y','N'))
     CHECK(SALARY BETWEEN 0 AND 100), 
     CHECK(MARRIAGE IN ('Y','N')) 
 );
@@ -767,20 +767,20 @@ SELECT  *
 FROM    TEST_CK;
 
 -- DROP
--- DROP TABLE TABLE_NAME [CASCADE CONSTRAINTS] : °ü°è°¡ ÀÖ´Â ºÎ¸ð Å×ÀÌºí ¸ÕÀú »èÁ¦ °¡´É.
+-- DROP TABLE TABLE_NAME [CASCADE CONSTRAINTS] : ê´€ê³„ê°€ ìžˆëŠ” ë¶€ëª¨ í…Œì´ë¸” ë¨¼ì € ì‚­ì œ ê°€ëŠ¥.
 
 
--- VIEW : ³í¸®ÀûÀÎ ±¸Á¶¸¸ °®°í ÀÖ°í µ¥ÀÌÅÍ´Â ´ã°í ÀÖÁö ¾ÊÀ½. 
--- Å×ÀÌºíÀÇ ºÎºÐÁýÇÕÀ¸·Î º¸¾È Ãø¸éÀÌ³ª º¹ÀâÇÑ Äõ¸®¸¦ ´Ü¼øÈ­ÇÏ±â À§ÇØ »ç¿ë. ÀÐ±â Àü¿ëÀ¸·Î »ý°¢.
--- ´ÜÀÏ ºä(INSERT,UPDATE,DELETE)°¡´É (¿øº» Å×ÀÌºí¿¡ ¿µÇâ ¹ÌÄ§) , º¹ÇÕ ºä(I,U,D) ºÒ°¡
+-- VIEW : ë…¼ë¦¬ì ì¸ êµ¬ì¡°ë§Œ ê°–ê³  ìžˆê³  ë°ì´í„°ëŠ” ë‹´ê³  ìžˆì§€ ì•ŠìŒ. 
+-- í…Œì´ë¸”ì˜ ë¶€ë¶„ì§‘í•©ìœ¼ë¡œ ë³´ì•ˆ ì¸¡ë©´ì´ë‚˜ ë³µìž¡í•œ ì¿¼ë¦¬ë¥¼ ë‹¨ìˆœí™”í•˜ê¸° ìœ„í•´ ì‚¬ìš©. ì½ê¸° ì „ìš©ìœ¼ë¡œ ìƒê°.
+-- ë‹¨ì¼ ë·°(INSERT,UPDATE,DELETE)ê°€ëŠ¥ (ì›ë³¸ í…Œì´ë¸”ì— ì˜í–¥ ë¯¸ì¹¨) , ë³µí•© ë·°(I,U,D) ë¶ˆê°€
 -- DROP VIEW VIEW_NAME 
 /*
-[±âº»±¸¹®]
+[ê¸°ë³¸êµ¬ë¬¸]
 CREATE [OR REPLACE] VIEW VIEW_NAME(ALIAS)
 AS SUBQUERY;
 */
--- ºÎ¼­¹øÈ£°¡ 90¹øÀÎ »ç¿øÀÇ ÀÌ¸§, ºÎ¼­¹øÈ£¸¸ Á¢±ÙÇÒ ¼ö ÀÖ´Â VIEW¸¦ »ý¼ºÇÑ´Ù¸é?
-CREATE OR REPLACE VIEW V_EMP_90(A,B) -- ¿©±â¼­µµ º°Äª(ALIAS)À» ¸¸µé ¼ö ÀÖ´Ù A,B
+-- ë¶€ì„œë²ˆí˜¸ê°€ 90ë²ˆì¸ ì‚¬ì›ì˜ ì´ë¦„, ë¶€ì„œë²ˆí˜¸ë§Œ ì ‘ê·¼í•  ìˆ˜ ìžˆëŠ” VIEWë¥¼ ìƒì„±í•œë‹¤ë©´?
+CREATE OR REPLACE VIEW V_EMP_90(A,B) -- ì—¬ê¸°ì„œë„ ë³„ì¹­(ALIAS)ì„ ë§Œë“¤ ìˆ˜ ìžˆë‹¤ A,B
 AS  SELECT  EMP_NAME,
             DEPT_ID
     FROM    EMPLOYEE
@@ -789,20 +789,20 @@ AS  SELECT  EMP_NAME,
 SELECT  *
 FROM    V_EMP_90
 
--- ÀÎ¶óÀÎ ºä¸¦ È°¿ëÇÑ TOP N ºÐ¼® °¡´ÉÇÏ´Ù. : Á¶°Ç¿¡ ¸Â´Â »óÀ§ ¸î °³
--- Á¶°Ç¿¡ ¸Â´Â ÃÖ»óÀ§ ¶Ç´Â ÃÖÇÏÀ§ ·¹ÄÚµå N°³¸¦ ½Äº°ÇÒ ¶§ »ç¿ë
+-- ì¸ë¼ì¸ ë·°ë¥¼ í™œìš©í•œ TOP N ë¶„ì„ ê°€ëŠ¥í•˜ë‹¤. : ì¡°ê±´ì— ë§žëŠ” ìƒìœ„ ëª‡ ê°œ
+-- ì¡°ê±´ì— ë§žëŠ” ìµœìƒìœ„ ë˜ëŠ” ìµœí•˜ìœ„ ë ˆì½”ë“œ Nê°œë¥¼ ì‹ë³„í•  ë•Œ ì‚¬ìš©
 /*
-ºÐ¼® ¿ø¸®
-- Á¤·Ä
-- ROWNUM ÀÌ¶ó´Â °¡»óÀÇ ÄÃ·³À» ÀÌ¿ëÇØ¼­ Á¤·Ä ¼ø¼­´ë·Î ¼ø¹ø ºÎ¿©
-- ºÎ¿©µÈ ¼ø¹øÀ» ÀÌ¿ëÇØ¼­ ÇÊ¿äÇÑ ¼ö ¸¸Å­ ½Äº°
+ë¶„ì„ ì›ë¦¬
+- ì •ë ¬
+- ROWNUM ì´ë¼ëŠ” ê°€ìƒì˜ ì»¬ëŸ¼ì„ ì´ìš©í•´ì„œ ì •ë ¬ ìˆœì„œëŒ€ë¡œ ìˆœë²ˆ ë¶€ì—¬
+- ë¶€ì—¬ëœ ìˆœë²ˆì„ ì´ìš©í•´ì„œ í•„ìš”í•œ ìˆ˜ ë§Œí¼ ì‹ë³„
 */
---ºÎ¼­º° ±Þ¿© Æò±Õ
+--ë¶€ì„œë³„ ê¸‰ì—¬ í‰ê· 
 SELECT  ROWNUM,
         EMP_NAME
 FROM    EMPLOYEE;
 
--- ºÎ¼­º° Æò±Õ ±Þ¿©º¸´Ù ¸¹ÀÌ ¹Þ´Â »ç¶÷µé
+-- ë¶€ì„œë³„ í‰ê·  ê¸‰ì—¬ë³´ë‹¤ ë§Žì´ ë°›ëŠ” ì‚¬ëžŒë“¤
 SELECT  ROWNUM,
         EMP_NAME,
         SALARY
@@ -813,10 +813,10 @@ FROM    (SELECT
         GROUP BY    DEPT_ID) V
 JOIN    EMPLOYEE E ON(E.DEPT_ID = V.DEPT_ID)
 WHERE     SALARY > V.DAVG AND ROWNUM <= 5;
--- ORDER BY 3 DESC; ÀÌ·¸°Ô ¼ÒÆÃÇÏ¸é ROWNUMÀÌ ÈåÆ®·¯Áü
+-- ORDER BY 3 DESC; ì´ë ‡ê²Œ ì†ŒíŒ…í•˜ë©´ ROWNUMì´ ííŠ¸ëŸ¬ì§
 
--- TOP N ºÐ¼®, Á¤·ÄÀÌ µÇ¾îÀÖ´Â ·¹ÄÚµå¿¡ ROWNUM ¶Ç´Â RANK¸¦ »ç¿ëÇÏ´Â °ÍÀÌ TOP N ºÐ¼®.
--- ROWNUMÀº Á¤·Ä µÇ¾îÀÖ´Â ·¹ÄÚµå¿¡ '=' µîÈ£¸¦ ¾²¸é ÃÖ»óÀ§ ÇÑ °Ç¸¸ Ãâ·Â.
+-- TOP N ë¶„ì„, ì •ë ¬ì´ ë˜ì–´ìžˆëŠ” ë ˆì½”ë“œì— ROWNUM ë˜ëŠ” RANKë¥¼ ì‚¬ìš©í•˜ëŠ” ê²ƒì´ TOP N ë¶„ì„.
+-- ROWNUMì€ ì •ë ¬ ë˜ì–´ìžˆëŠ” ë ˆì½”ë“œì— '=' ë“±í˜¸ë¥¼ ì“°ë©´ ìµœìƒìœ„ í•œ ê±´ë§Œ ì¶œë ¥.
 SELECT  ROWNUM, EMP_NAME, SALARY
 FROM (   
             SELECT  EMP_NAME,
@@ -831,7 +831,7 @@ FROM (
             ORDER BY 2 DESC)
 WHERE ROWNUM = 1;
 
--- RANK()¸¦ ÀÌ¿ëÇÑ TOP N ºÐ¼®
+-- RANK()ë¥¼ ì´ìš©í•œ TOP N ë¶„ì„
 SELECT  *
 FROM    (SELECT  EMP_NAME,
                     SALARY,
@@ -841,7 +841,7 @@ WHERE   RANK = 5;
 
 
 -- SEQUENCE
--- ¼øÂ÷ÀûÀ¸·Î Á¤¼ö °ªÀ» ÀÚµ¿À¸·Î »ý¼ºÇÏ´Â °´Ã¼
+-- ìˆœì°¨ì ìœ¼ë¡œ ì •ìˆ˜ ê°’ì„ ìžë™ìœ¼ë¡œ ìƒì„±í•˜ëŠ” ê°ì²´
 /* CREATE SEQUENCE SEQUENCE_NAME;
 START WITH 10
 INCREMENT BY 10
@@ -850,8 +850,8 @@ MAXVALUE 100
 */
 -- NEXTVAL, CURRVAL
 CREATE SEQUENCE TEST_SEQ;
-SELECT TEST_SEQ.NEXTVAL FROM DUAL; -- ´ÙÀ½ °ªÀ» ¸®ÅÏ.
-SELECT TEST_SEQ.CURRVAL FROM DUAL; -- ¸¶Áö¸· °ªÀ» ¸®ÅÏ.
+SELECT TEST_SEQ.NEXTVAL FROM DUAL; -- ë‹¤ìŒ ê°’ì„ ë¦¬í„´.
+SELECT TEST_SEQ.CURRVAL FROM DUAL; -- ë§ˆì§€ë§‰ ê°’ì„ ë¦¬í„´.
 DROP SEQUENCE TEST_SEQ;
 
 
@@ -893,26 +893,26 @@ CREATE TABLE ORDERDETAIL(
     PRIMARY KEY(ORDERNO,PNO)
 );
 /*
-ALTER TABLE TABLE¸í ADD ÄÃ·³¸í µ¥ÀÌÅÍÅ¸ÀÔ : ÄÃ·³ Ãß°¡
-ALTER TABLE TABLE¸í DROP COLUMN ÄÃ·³¸í : ÄÃ·³ »èÁ¦
-ALTER TABLE ORTL RENAME TO ORDERDETAIL : Å×ÀÌºí ¸í ¹Ù²Ù±â
+ALTER TABLE TABLEëª… ADD ì»¬ëŸ¼ëª… ë°ì´í„°íƒ€ìž… : ì»¬ëŸ¼ ì¶”ê°€
+ALTER TABLE TABLEëª… DROP COLUMN ì»¬ëŸ¼ëª… : ì»¬ëŸ¼ ì‚­ì œ
+ALTER TABLE ORTL RENAME TO ORDERDETAIL : í…Œì´ë¸” ëª… ë°”ê¾¸ê¸°
 */
 
 --DAY05
 -- DML(SELECT, INSERT, UPDATE, DELETE)
 -- TRANSACTION( COMMIT, ROLLBACK)
 /*
-¹«°á¼º Á¦¾à
-            ºÎ¸ð      ÀÚ½Ä
+ë¬´ê²°ì„± ì œì•½
+            ë¶€ëª¨      ìžì‹
 UPDATE       X         O
 INSERT       O         O
 DELETE       X         O
 */
--- µ¥ÀÌÅÍ °»½Å ±¸¹®
+-- ë°ì´í„° ê°±ì‹  êµ¬ë¬¸
 /*
 UPDATE  TABLE_NAME
-SET     COLUMN_NMAE = VALUE | SUBQUERY, [COLUMN_NAME = VALUE] -- SET Àý ±îÁö¸¸ ¾²¸é Æ¯Á¤ ÄÃ·³¿¡ ÀüÃ¼ Çà¿¡ ´ëÇÑ º¯°æ
-[WHERE   CONDITION] -- ÀÌ°Ç ¿É¼ÇÀÌÁö¸¸ WHEREÀýÀ» ³ÖÀ¸¸é Æ¯Á¤ ÄÃ·³¿¡ ´ëÇÑ °ª º¯°æ
+SET     COLUMN_NMAE = VALUE | SUBQUERY, [COLUMN_NAME = VALUE] -- SET ì ˆ ê¹Œì§€ë§Œ ì“°ë©´ íŠ¹ì • ì»¬ëŸ¼ì— ì „ì²´ í–‰ì— ëŒ€í•œ ë³€ê²½
+[WHERE   CONDITION] -- ì´ê±´ ì˜µì…˜ì´ì§€ë§Œ WHEREì ˆì„ ë„£ìœ¼ë©´ íŠ¹ì • ì»¬ëŸ¼ì— ëŒ€í•œ ê°’ ë³€ê²½
 */
 SELECT  *
 FROM    EMPLOYEE;
@@ -920,9 +920,9 @@ FROM    EMPLOYEE;
 UPDATE  EMPLOYEE
 SET     JOB_ID = (SELECT    JOB_ID
                     FROM    EMPLOYEE
-                    WHERE   EMP_NAME = '¼ºÇØ±³'),
+                    WHERE   EMP_NAME = 'ì„±í•´êµ'),
         DEPT_ID = '90'
-WHERE   EMP_NAME = '½ÉÇÏ±Õ'
+WHERE   EMP_NAME = 'ì‹¬í•˜ê· '
 
 UPDATE  EMPLOYEE
 SET     MARRIAGE = DEFAULT
@@ -934,24 +934,24 @@ INSERT INTO TABLE_NAME(COLUMN_NAME)
 VALUES (VALUE1,VALUE2)
 INSERT INTO TABLE_NAME(COLUMN_NAME)
 SUBQUERY
-- µ¥ÀÌÅÍ Å¸ÀÔ ÀÏÄ¡
-- ¼ø¼­ ÀÏÄ¡
-- °³¼ö ÀÏÄ¡
+- ë°ì´í„° íƒ€ìž… ì¼ì¹˜
+- ìˆœì„œ ì¼ì¹˜
+- ê°œìˆ˜ ì¼ì¹˜
 */
 INSERT INTO EMPLOYEE(EMP_ID,EMP_NAME,EMP_NO)
-VALUES('900', 'ÀÓÁ¤¼·', '123456-1234567');
+VALUES('900', 'ìž„ì •ì„­', '123456-1234567');
 
--- DELETE: Å×ÀÌºí¿¡ Æ÷ÇÔµÈ ±âÁ¸ µ¥ÀÌÅÍ¸¦ »èÁ¦, Áï ·¹ÄÚµå »èÁ¦, ROLLBACK °¡´É
+-- DELETE: í…Œì´ë¸”ì— í¬í•¨ëœ ê¸°ì¡´ ë°ì´í„°ë¥¼ ì‚­ì œ, ì¦‰ ë ˆì½”ë“œ ì‚­ì œ, ROLLBACK ê°€ëŠ¥
 /*
-DELETE FROM TABLE_NAME : ¿©±â±îÁö¸¸ ÇÏ¸é Å×ÀÌºí ±¸Á¶´Â ³²±â°í ÀüÃ¼ µ¥ÀÌÅÍ¸¦ »èÁ¦
+DELETE FROM TABLE_NAME : ì—¬ê¸°ê¹Œì§€ë§Œ í•˜ë©´ í…Œì´ë¸” êµ¬ì¡°ëŠ” ë‚¨ê¸°ê³  ì „ì²´ ë°ì´í„°ë¥¼ ì‚­ì œ
 [WHERE CONDITION];
 
-TRUNCATE TABLE TABLE_NAME : ROLLBACKºÒ°¡´É ¹«Á¶°Ç COMMITµÊ µû¶ó¼­ µ¥ÀÌÅÍ º¹±¸°¡ ¾ÈµÊ.
+TRUNCATE TABLE TABLE_NAME : ROLLBACKë¶ˆê°€ëŠ¥ ë¬´ì¡°ê±´ COMMITë¨ ë”°ë¼ì„œ ë°ì´í„° ë³µêµ¬ê°€ ì•ˆë¨.
 */
 SELECT  *
 FROM    DEPARTMENT;
 
--- ERROR ¹«°á¼º Á¦¾à À§¹è, EMPLOYEEÅ×ÀÌºíÀÌ DEPARTMENTÀÇ LOC_ID¸¦ ¿Ü·¡Å°·Î ÂüÁ¶.
+-- ERROR ë¬´ê²°ì„± ì œì•½ ìœ„ë°°, EMPLOYEEí…Œì´ë¸”ì´ DEPARTMENTì˜ LOC_IDë¥¼ ì™¸ëž˜í‚¤ë¡œ ì°¸ì¡°.
 DELETE 
 FROM  DEPARTMENT
 WHERE LOC_ID LIKE 'A%';
@@ -962,52 +962,118 @@ WHERE   JOB_ID = 'J2';
 
 DELETE
 FROM    EMPLOYEE
-WHERE   EMP_ID = '141'; --EMPLOYEE´Â Àç±Í(MGR_ID°¡ EMP_ID ÂüÁ¶ Áß)
+WHERE   EMP_ID = '141'; --EMPLOYEEëŠ” ìž¬ê·€(MGR_IDê°€ EMP_ID ì°¸ì¡° ì¤‘)
 
 -- TRANSACTION
--- µ¥ÀÌÅÍÀÇ ÀÏ°ü¼ºÀ» À¯ÁöÇÏ±âÀ§ÇØ¼­ »ç¿ëÇÏ´Â ³í¸®ÀûÀ¸·Î ¿¬°üµÈ ÀÛ¾÷µéÀÇ ÁýÇÕ
--- ÇÏ³ªÀÌ»óÀÇ ¿¬°üµÈ DML ÀÛ¾÷
+-- ë°ì´í„°ì˜ ì¼ê´€ì„±ì„ ìœ ì§€í•˜ê¸°ìœ„í•´ì„œ ì‚¬ìš©í•˜ëŠ” ë…¼ë¦¬ì ìœ¼ë¡œ ì—°ê´€ëœ ìž‘ì—…ë“¤ì˜ ì§‘í•©
+-- í•˜ë‚˜ì´ìƒì˜ ì—°ê´€ëœ DML ìž‘ì—…
 >INSERT~~
 >UPDATE~~
->COMMIT/ROLLBACK :Å×ÀÌºí¿¡ Á÷Á¢ ¹Ý¿µ / ¿ø»ó º¹±Í
+>COMMIT/ROLLBACK :í…Œì´ë¸”ì— ì§ì ‘ ë°˜ì˜ / ì›ìƒ ë³µê·€
 
 >UPDATE
 >DELETE
->CREATE - AUTO COMMIT ¹ß»ý(DDL ¸í·É¾î¸¦ ÀÔ·ÂÇÏ¸é), Å×ÀÌºí¿¡ Àû¿ë µÊ.
+>CREATE - AUTO COMMIT ë°œìƒ(DDL ëª…ë ¹ì–´ë¥¼ ìž…ë ¥í•˜ë©´), í…Œì´ë¸”ì— ì ìš© ë¨.
 
--- µ¿½Ã¼º Á¦¾î
+-- ë™ì‹œì„± ì œì–´
 
 
 --ALTER
 /*
--Å×ÀÌºí ¼öÁ¤, »õÄÃ·³ Ãß°¡, ±âÁ¸ ÄÃ·³ »èÁ¦, ±âÁ¸ ÄÃ·³ÀÇ µ¥ÀÌÅÍÇüÀÌ³ª ¼Ó¼º º¯°æ°¡´É
--Å×ÀÌºí ¼öÁ¤ = Å×ÀÌºíÀÇ ÄÃ·³ ¼öÁ¤
--°¢Á¾ Á¦¾à Á¶°Ç Ãß°¡ ½Ã¿¡µµ È°¿ë °¡´É
+-í…Œì´ë¸” ìˆ˜ì •, ìƒˆì»¬ëŸ¼ ì¶”ê°€, ê¸°ì¡´ ì»¬ëŸ¼ ì‚­ì œ, ê¸°ì¡´ ì»¬ëŸ¼ì˜ ë°ì´í„°í˜•ì´ë‚˜ ì†ì„± ë³€ê²½ê°€ëŠ¥
+-í…Œì´ë¸” ìˆ˜ì • = í…Œì´ë¸”ì˜ ì»¬ëŸ¼ ìˆ˜ì •
+-ê°ì¢… ì œì•½ ì¡°ê±´ ì¶”ê°€ ì‹œì—ë„ í™œìš© ê°€ëŠ¥
 */
---CASE 1. ÄÃ·³ ¼Ó¼º º¯°æ
+--CASE 1. ì»¬ëŸ¼ ì†ì„± ë³€ê²½
 ALTER TABLE TABLE_NAME
-MODIFY ÄÃ·³¸í µ¥ÀÌÅÍÅ¸ÀÔ; --¿¹)MODIFY EMP_NAME VARCHAR2(20)
---CASE 2. ÄÃ·³¿¡ Á¦¾à Á¶°Ç Ãß°¡
+MODIFY ì»¬ëŸ¼ëª… ë°ì´í„°íƒ€ìž…; --ì˜ˆ)MODIFY EMP_NAME VARCHAR2(20)
+--CASE 2. ì»¬ëŸ¼ì— ì œì•½ ì¡°ê±´ ì¶”ê°€
 ALTER TABLE TABLE_NAME
-ADD CONSTRAINTS Á¦¾àÁ¶°Ç¸í PRIMARY KEY(ÄÃ·³¸í);
---2°³ ÀÌ»óÀÇ ÄÃ·³À» ±âº» Å°·Î ¼³Á¤(ÄÃ·³¸í1,ÄÃ·³¸í2)
+ADD CONSTRAINTS ì œì•½ì¡°ê±´ëª… PRIMARY KEY(ì»¬ëŸ¼ëª…);
+--2ê°œ ì´ìƒì˜ ì»¬ëŸ¼ì„ ê¸°ë³¸ í‚¤ë¡œ ì„¤ì •(ì»¬ëŸ¼ëª…1,ì»¬ëŸ¼ëª…2)
 ALTER TABLE TABLE_NAME
-DROP CONSTRAINTS Á¦¾àÁ¶°Ç¸í -- Á¦¾à Á¶°ÇÀ» »èÁ¦
---CASE 3. »õ·Î¿î ÄÃ·³ Ãß°¡
+DROP CONSTRAINTS ì œì•½ì¡°ê±´ëª… -- ì œì•½ ì¡°ê±´ì„ ì‚­ì œ
+--CASE 3. ìƒˆë¡œìš´ ì»¬ëŸ¼ ì¶”ê°€
 ALTER TABLE TABLE_NAME
-ADD ÄÃ·³¸í µ¥ÀÌÅÍÅ¸ÀÔ; NOT NULL ¸í½Ã °¡´É
---CASE 4. ÄÃ·³ »èÁ¦
+ADD ì»¬ëŸ¼ëª… ë°ì´í„°íƒ€ìž…; NOT NULL ëª…ì‹œ ê°€ëŠ¥
+--CASE 4. ì»¬ëŸ¼ ì‚­ì œ
 ALTER TABLE TABLE_NAME
-DROP COLUMN ÄÃ·³¸í
+DROP COLUMN ì»¬ëŸ¼ëª…
 
 ALTER TABLE item_content
     ADD COLUMN badge INTEGER,
     ADD COLUMN age INTEGER NOT NULL DEFAULT 0,
     ADD COLUMN duration INTEGER AFTER description;
---ÄÃ·³ ÀÌ¸§ ¹Ù²Ù±â
+--ì»¬ëŸ¼ ì´ë¦„ ë°”ê¾¸ê¸°
 ALTER TABLE contacts
     CHANGE COLUMN old_name new_name
     varchar(20) NOT NULL;
--- Å×ÀÌºí ÀÌ¸§ ¹Ù²Ù±â
+-- í…Œì´ë¸” ì´ë¦„ ë°”ê¾¸ê¸°
 ALTER TABLE contacts
   RENAME TO people;
+
+       
+CREATE TABLE S(
+        N1 NUMBER,
+        N2 NUMBER,
+        C1 VARCHAR2(5),
+        C2 VARCHAR2(5)
+);
+
+INSERT INTO S VALUES(1,NULL,'A',NULL);
+INSERT INTO S VALUES(2,1,'B','A');
+INSERT INTO S VALUES(4,2,'D','B');
+INSERT INTO S VALUES(5,4,'E','D');
+INSERT INTO S VALUES(3,1,'C','A');
+
+SELECT  *
+FROM    S;
+
+DELETE 
+FROM S
+WHERE N1 = 3;
+
+SELECT  C1,C2,N1,N2
+FROM    S
+WHERE   N1=4 START WITH N2 IS NULL CONNECT BY PRIOR N1 = N2;
+
+SELECT  C1,C2,N1,N2
+FROM    S
+START WITH C2='B' CONNECT BY PRIOR N1 = N2 AND C2<>'D';
+
+SELECT  C1,C2,N1,N2
+FROM    S
+START WITH C1='B' CONNECT BY PRIOR N1 = N2 AND PRIOR C2='B';
+
+SELECT  C1,C2,N1,N2
+FROM    S
+WHERE   C1<>'B' START WITH N1=2 CONNECT BY PRIOR N1=N2 AND PRIOR N1=2;
+
+CREATE TABLE Q(
+        ID NUMBER,
+        DEPT_NM VARCHAR(2),
+        SALARY NUMBER
+);
+INSERT INTO Q VALUES(1,'A',1000);
+INSERT INTO Q VALUES(1,'A',100);
+INSERT INTO Q VALUES(2,'B',500);
+INSERT INTO Q VALUES(2,'B',4000);
+INSERT INTO Q VALUES(2,'B',10);
+INSERT INTO Q VALUES(3,'C',150);
+INSERT INTO Q VALUES(3,'C',10);
+
+SELECT  ID, DEPT_NM, SUM(SALARY)
+FROM    Q
+GROUP BY ROLLUP(ID,DEPT_NM);
+
+SELECT  ID, DEPT_NM, SUM(SALARY)
+FROM    Q
+GROUP BY ROLLUP(DEPT_NM,ID);
+
+SELECT  ID, DEPT_NM, SUM(SALARY)
+FROM    Q
+GROUP BY CUBE(ID,DEPT_NM);
+
+SELECT  ID, DEPT_NM, SUM(SALARY)
+FROM    Q
+GROUP BY GROUPING SETS(ID,DEPT_NM);
